@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27000:27000"
+    volumes:
+      - mongo_data:/data/db
+
+  backend-node:
+    build: ./backend-node
+    container_name: backend-node
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  flask-app:
+    build: ./flask-app
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
+    driver: local
