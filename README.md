@@ -10,9 +10,9 @@
 * attendance(using qr code localhost:3000/markatten/:userId only admin can scan qr and mark attendance  or also integrate google sheets api in gcp)
 * Apply Volunteering
 
-~ other: ~
-~~ razorpay(payment) ~~
-~~ Location maps(location of event hall) ~~
-~~ Find a teammate () ~~
-~~ flutterflow ~~
+~~other:~~
+~~razorpay(payment)~~
+~~Location maps(location of event hall)~~
+~~Find a teammate ()~~
+~~flutterflow~~
 
