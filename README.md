@@ -18,3 +18,5 @@
 * ~~flutterflow~~
 
 * docker linux with chatbot(flask) mongodb nodejs server
+
+docker starter : docker-compose up --build
