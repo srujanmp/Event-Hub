@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
+const path = require('path');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+
 require('dotenv').config();
 
 const app = express();
@@ -19,6 +21,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/your_db_n
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Body parser middleware
 app.use(express.urlencoded({ extended: false }));

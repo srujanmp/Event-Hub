@@ -1,0 +1,190 @@
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: radial-gradient(circle at center, #aa2085, #000000 93%, #000000 100%);
+    color: white;
+    display: flex;
+	min-height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0; /* Stick to the top of the viewport */
+    z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.logo img {
+    width: 160px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap:15px;
+
+}
+
+.btn {
+    padding: 10px 20px;
+    margin-right: 30px;
+    background-color: #ff00c3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #d54ebc;
+}
+
+.main_info{
+    padding: 5%;
+}
+.info {
+    display: flex;
+    align-items: flex-start; /* Aligns items at the top */
+    gap: 20px; /* Space between the image and content */
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent white background for glass effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    backdrop-filter: blur(10px); /* Frosted glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    margin-bottom: 20px;
+}
+
+.info:hover {
+    transform: scale(1.05); /* Slightly increase the size on hover */
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Add more depth on hover */
+}
+
+/* Image container */
+.pic {
+    flex: 1; /* Allow the image container to resize */
+    min-width: 250px; /* Set a minimum width for the image container */
+    max-width: 600px; /* Optional: Set a maximum width for larger screens */
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent background for the image */
+    border-radius: 10px;
+    overflow: hidden; /* Ensure the image stays within the rounded corners */
+    display: flex;
+    justify-content: center; /* Center the image */
+    align-items: center;
+}
+
+/* Image styling */
+.event_img {
+    width: 100%; /* Make the image responsive to its container */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Content div */
+.content {
+    flex: 2; /* Allow the content to take more space compared to the image */
+    min-width: 300px; /* Set a minimum width for the content */
+
+    padding: 20px;
+  
+    /* backdrop-filter: blur(10px); Frosted glass effect */
+    /* -webkit-backdrop-filter: blur(10px); /* For Safari */
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Depth 
+    border: 1px solid rgba(255, 255, 255, 0.2); Light border */ 
+}
+
+.head_name {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #eee;
+    line-height: 1.6;
+}
+
+
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .info {
+        flex-direction: column; /* Stack image and content on smaller screens */
+    }
+
+    .pic, .content {
+        flex: none; /* Remove flex-grow for better stacking on smaller screens */
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+
+
+
+.contentLOGO h2 {
+	color: #fff;
+	font-size: 3em;
+    margin-left: 150px;
+	position: absolute;
+    font-family:Arial, Helvetica, sans-serif;
+	transform: translate(-50%, -50%);
+}
+
+.contentLOGO h2:nth-child(1) {
+	color: transparent;
+	-webkit-text-stroke: 2px #ffffff;
+}
+
+.contentLOGO h2:nth-child(2) {
+	color: #f4f1f3;
+	animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+	0%,
+	100% {
+		clip-path: polygon(
+			0% 45%,
+			16% 44%,
+			33% 50%,
+			54% 60%,
+			70% 61%,
+			84% 59%,
+			100% 52%,
+			100% 100%,
+			0% 100%
+		);
+	}
+
+	50% {
+		clip-path: polygon(
+			0% 60%,
+			15% 65%,
+			34% 66%,
+			51% 62%,
+			67% 50%,
+			84% 45%,
+			100% 46%,
+			100% 100%,
+			0% 100%
+		);
+	}
+}
+
