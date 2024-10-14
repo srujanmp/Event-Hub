@@ -10,7 +10,7 @@ const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'admin2@gmail.com'];
 
 // Function to get the current domain dynamically
 const getCurrentDomain = (req) => {
-  return `https://zany-pancake-pqp699x5vwqcwv-5000.app.github.dev`;
+  return process.env.BASE_URL;
 };
 
 // Configure passport Google strategy for admins
