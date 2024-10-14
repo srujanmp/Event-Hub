@@ -2,17 +2,23 @@ const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const router = express.Router();
-const User = require('../models/User'); // Assuming you are using the User model for admins as well
+const User = require('../models/User');
 require('dotenv').config();
 
 // Hardcoded admin emails
 const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'admin2@gmail.com'];
 
+// Function to get the current domain dynamically
+const getCurrentDomain = (req) => {
+  return `https://zany-pancake-pqp699x5vwqcwv-5000.app.github.dev`;
+};
+
 // Configure passport Google strategy for admins
 passport.use('admin-google', new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: `${process.env.BASE_URL}/admin/auth/google/callback` // Update to the admin callback URL
+  callbackURL: '/admin/auth/google/callback',
+  proxy: true
 }, async (accessToken, refreshToken, profile, done) => {
   const email = profile.emails[0].value;
 
@@ -31,6 +37,7 @@ passport.use('admin-google', new GoogleStrategy({
         name: profile.displayName,
         email: email,
         profilePicture: profile.photos[0].value,
+        isAdmin: true
       });
       await user.save();
       return done(null, user);
@@ -42,11 +49,25 @@ passport.use('admin-google', new GoogleStrategy({
 }));
 
 // Admin login route
-router.get('/login', passport.authenticate('admin-google', { scope: ['profile', 'email'] }));
+router.get('/login', (req, res, next) => {
+  const currentDomain = getCurrentDomain(req);
+  passport.authenticate('admin-google', { 
+    scope: ['profile', 'email'],
+    prompt: 'select_account',
+    callbackURL: `${currentDomain}/admin/auth/google/callback`
+  })(req, res, next);
+});
 
 // Admin Google OAuth callback route
 router.get('/auth/google/callback',
-  passport.authenticate('admin-google', { failureRedirect: '/admin/login' }),
+  (req, res, next) => {
+    const currentDomain = getCurrentDomain(req);
+    passport.authenticate('admin-google', { 
+      failureRedirect: '/',
+      failureFlash: true,
+      callbackURL: `${currentDomain}/admin/auth/google/callback`
+    })(req, res, next);
+  },
   (req, res) => {
     // Successful authentication, redirect to admin dashboard
     res.redirect('/admin/dashboard');
@@ -63,17 +84,18 @@ router.get('/dashboard', (req, res) => {
 
   // Check if the email is in the allowed admin emails list
   if (!allowedAdminEmails.includes(email)) {
-    req.logout();
-    req.flash('error_msg', 'Unauthorized access: Admins only.');
-    return res.redirect('/admin/login');
+    req.logout((err) => {
+      if (err) console.error(err);
+      req.flash('error_msg', 'Unauthorized access: Admins only.');
+      res.redirect('/');
+    });
+  } else {
+    res.render('adminDashboard', { user: req.user });
   }
-
-  res.render('adminDashboard', { user: req.user });
 });
 
-// Logout route
-router.get('/logout', (req, res) => {
-  req.logout(err => {
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
     if (err) return next(err);
     req.flash('success_msg', 'You are logged out');
     res.redirect('/');
