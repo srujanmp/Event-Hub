@@ -20,8 +20,9 @@ body {
 .navbar {
     display: flex;
     justify-content: space-between;
+
     align-items: center;
-    padding: 10px 20px;
+    padding: 2% 4%;
     position: sticky;
     top: 0; /* Stick to the top of the viewport */
     z-index: 1000; /* Ensure it stays on top of other content */
@@ -33,7 +34,7 @@ body {
 
 .nav-buttons {
     display: flex;
-    gap:15px;
+    /* gap:15px; */
 
 }
 
