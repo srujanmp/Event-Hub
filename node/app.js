@@ -1,62 +1,56 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const passport = require('passport');
+const session = require('express-session');
 const flash = require('connect-flash');
-const authRoutes = require('./routes/auth');
-const indexRoutes = require('./routes/index');
-const keys = require('./config/keys');
+const userRoutes = require('./routes/userRoutes'); // Import user routes
+const adminRoutes = require('./routes/adminRoutes'); // Import admin routes
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 
-// EJS
+// MongoDB Connection
+mongoose.connect('mongodb://localhost:27017/your_db_name')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Set EJS as the template engine
 app.set('view engine', 'ejs');
 
-// Express session
+// Body parser middleware
+app.use(express.urlencoded({ extended: false }));
+
+// Express session middleware
 app.use(session({
-    secret: 'yourSecret',
-    resave: false,
-    saveUninitialized: false
+  secret: 'your_secure_secret_key', // Replace with a strong secret
+  resave: true,
+  saveUninitialized: true,
 }));
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Connect flash
 app.use(flash());
 
-// Google Strategy setup
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
-passport.use(new GoogleStrategy({
-    clientID: keys.googleClientID,
-    clientSecret: keys.googleClientSecret,
-    callbackURL: keys.googleCallbackURL
-}, (accessToken, refreshToken, profile, done) => {
-    // Logic to handle user registration/login based on profile info (handle via Mongoose)
-    // This could be dynamic for college, event manager, and student roles
-    console.log(profile);
-    return done(null, profile); // Save profile in session, or create a user in MongoDB
-}));
-
-passport.serializeUser((user, done) => {
-    done(null, user);
+// Global variables for flash messages
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
 });
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
-
+  
 // Routes
-app.use('/', indexRoutes);
-app.use('/auth', authRoutes);
-
-// Mongoose setup (adjust connection string)
-mongoose.connect('mongodb://localhost/yourDatabase', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
+app.get('/', (req, res) => {
+  res.render('index'); // Render homepage with login buttons
 });
+
+// User and Admin login routes
+app.use('/user', userRoutes); // User routes
+app.use('/admin', adminRoutes); // Admin routes
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, console.log(`Server running on port ${PORT}`));
