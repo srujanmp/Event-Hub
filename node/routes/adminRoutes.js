@@ -20,6 +20,12 @@ passport.use('admin-google', new GoogleStrategy({
   callbackURL: '/admin/auth/google/callback',
   proxy: true
 }, async (accessToken, refreshToken, profile, done) => {
+  // Extract email domain
+  const emailDomain = profile.emails[0].value.split('@')[1];
+      
+  // Set college based on email domain
+  const college = emailDomain === 'nmamit.in' ? 'NMAMIT' : 'Other';
+
   const email = profile.emails[0].value;
 
   // Check if the email is in the allowed admin emails list
@@ -37,7 +43,8 @@ passport.use('admin-google', new GoogleStrategy({
         name: profile.displayName,
         email: email,
         profilePicture: profile.photos[0].value,
-        isAdmin: true
+        isAdmin: true,
+        college: college
       });
       await user.save();
       return done(null, user);

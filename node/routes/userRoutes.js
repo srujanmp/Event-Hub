@@ -20,6 +20,11 @@ passport.use('user-google', new GoogleStrategy({
   proxy: true
 }, async (accessToken, refreshToken, profile, done) => {
   try {
+    // Extract email domain
+  const emailDomain = profile.emails[0].value.split('@')[1];
+      
+  // Set college based on email domain
+  const college = emailDomain === 'nmamit.in' ? 'NMAMIT' : 'Other';
     const email = profile.emails[0].value;
     const domain = email.substring(email.lastIndexOf("@"));
     
@@ -36,7 +41,8 @@ passport.use('user-google', new GoogleStrategy({
       googleId: profile.id,
       displayName: profile.displayName,
       email: email,
-      profilePicture: profile.photos[0].value
+      profilePicture: profile.photos[0].value,
+      college: college
     });
     await newUser.save();
     return done(null, newUser);
