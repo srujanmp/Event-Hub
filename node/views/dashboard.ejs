@@ -10,6 +10,15 @@
   <img src="<%= user.profilePicture %>" alt="Profile Picture">
   <p>Email: <%= user.email %></p>
   <p>College: <%= user.college %></p>
-  <a href="/user/logout">Logout</a>
+
+  <% if (user.isAdmin) { %>
+    <div>
+      <h2>Admin Panel</h2>
+      <p>Manage events, users, and more...</p>
+      <!-- Add more admin-specific content here -->
+    </div>
+  <% } %>
+
+  <a href="/auth/logout">Logout</a>
 </body>
 </html>
