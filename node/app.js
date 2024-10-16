@@ -4,9 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
-const userRoutes = require('./routes/userRoutes');
-const adminRoutes = require('./routes/adminRoutes');
-
+const authRoutes = require('./routes/auth');
 require('dotenv').config();
 
 const app = express();
@@ -56,9 +54,8 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// User and Admin routes
-app.use('/user', userRoutes);
-app.use('/admin', adminRoutes);
+// Auth routes
+app.use('/auth', authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

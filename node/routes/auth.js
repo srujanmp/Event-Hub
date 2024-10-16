@@ -14,13 +14,12 @@ const allowedDomains = ['@nmamit.in'];
 // Function to get the current domain dynamically
 const getCurrentDomain = (req) => {
   return process.env.BASE_URL;
-};
-
+}
 // Common Google OAuth strategy for both users and admins
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '/auth/google/callback',
+  callbackURL: '${process.env.BASE_URL}/auth/google/callback',
   proxy: true
 }, async (accessToken, refreshToken, profile, done) => {
   try {
@@ -78,12 +77,12 @@ router.get('/login', (req, res, next) => {
 });
 
 // Google OAuth callback route
-router.get('/auth/google/callback', (req, res, next) => {
+router.get('/google/callback', (req, res, next) => {
   const currentDomain = getCurrentDomain(req);
   passport.authenticate('google', {
     failureRedirect: '/',
     failureFlash: true,
-    callbackURL: `${currentDomain}/auth/google/callback`
+    callbackURL: '${currentDomain}/auth/google/callback'
   })(req, res, next);
 }, (req, res) => {
   res.redirect('/dashboard');
