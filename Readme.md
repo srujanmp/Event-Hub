@@ -2,7 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 # Hackloop 2024 project.
-hi
+hello
 
 ## Event management : webbased(ejs,mongoose,express) 
 * firebase auth
