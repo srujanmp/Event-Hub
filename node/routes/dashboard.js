@@ -9,9 +9,11 @@ router.get('/dashboard', (req, res) => {
         return res.redirect('/auth/login');
     }
 
+    console.log(req.user);
     // Pass the isAdmin flag from the user object to the template
     const isAdmin = req.user.isAdmin || false; // Default to false if not set
     res.render('dashboard', { user: req.user, isAdmin: isAdmin });
 });
+
 
 module.exports = router;

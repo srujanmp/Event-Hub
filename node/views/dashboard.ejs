@@ -1,24 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="css/dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css"> <!-- Link to your CSS file -->
+   <style>
+    
+
+.navbar {
+    background-color: #333; /* Dark background for the navbar */
+    padding: 10px 20px; /* Padding for the navbar */
+}
+
+.container {
+    display: flex; /* Flexbox for layout */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center items vertically */
+}
+
+.nav-links {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Horizontal layout for links */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.nav-links li {
+    margin-right: 20px; /* Spacing between items */
+    display: flex; /* Use flex to center align items */
+    align-items: center; /* Center align items vertically */
+}
+
+.nav-links a {
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 12px; /* Padding for links */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.nav-links a:hover {
+    background-color: #555; /* Darker background on hover */
+}
+
+.profile-pic {
+    width: 30px; /* Width of profile picture */
+    height: 30px; /* Height of profile picture */
+    border-radius: 50%; /* Circle shape */
+    margin-right: 8px; /* Space between the image and the link */
+    object-fit: cover; /* Ensure the image covers the box */
+}
+
+   </style>
 </head>
 <body>
-  <h1>Welcome, <%= user.name %></h1>
-  <img src="<%= user.profilePicture %>" alt="Profile Picture">
-  <p>Email: <%= user.email %></p>
-  <p>College: <%= user.college %></p>
+    <nav class="navbar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="/dashboard">Home</a></li>
+              
+                    <a href="/user/profile">
+                        <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-pic">
+                    </a>
+                
+                <li><a href="/auth/logout">Logout</a></li>
+                <% if (user.isAdmin) { %>
+                    <li><a href="/admin/create-event" class="create-event-btn">Create Event</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
 
-  <% if (isAdmin) { %>
-    <div class="admin-section">
-      <h2>Admin Panel</h2>
-      <!-- Add any admin-specific content here -->
+    <div class="dashboard-content">
+        <h1>Welcome, <%= user.name %>!</h1>
+        <!-- Add your dashboard content here -->
     </div>
-  <% } %>
-
-  <a href="/auth/logout">Logout</a>
 </body>
 </html>
