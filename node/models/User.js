@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false, // Default value is false, meaning the user is not an admin unless explicitly set.
+  },
   date: {
     type: Date,
     default: Date.now,

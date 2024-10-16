@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
   <h1>Welcome, <%= user.name %></h1>
@@ -11,11 +12,10 @@
   <p>Email: <%= user.email %></p>
   <p>College: <%= user.college %></p>
 
-  <% if (user.isAdmin) { %>
-    <div>
+  <% if (isAdmin) { %>
+    <div class="admin-section">
       <h2>Admin Panel</h2>
-      <p>Manage events, users, and more...</p>
-      <!-- Add more admin-specific content here -->
+      <!-- Add any admin-specific content here -->
     </div>
   <% } %>
 

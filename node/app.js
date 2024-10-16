@@ -5,6 +5,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
 const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard'); 
 require('dotenv').config();
 
 const app = express();
@@ -56,7 +57,7 @@ app.get('/', (req, res) => {
 
 // Auth routes
 app.use('/auth', authRoutes);
-
+app.use('/', dashboardRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -6,10 +6,10 @@ const User = require('../models/User');
 require('dotenv').config();
 
 // Hardcoded admin emails
-const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'admin2@gmail.com'];
+const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'mithunmallya97@gmail.com','sumukharao@gmail.com'];
 
 // Allowed email domains
-const allowedDomains = ['@nmamit.in'];
+const allowedDomains = ['nmamit.in'];
 
 // Function to get the current domain dynamically
 const getCurrentDomain = (req) => {
@@ -17,41 +17,51 @@ const getCurrentDomain = (req) => {
 }
 // Common Google OAuth strategy for both users and admins
 passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: '${process.env.BASE_URL}/auth/google/callback',
-  proxy: true
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const email = profile.emails[0].value;
-    const emailDomain = email.split('@')[1];
-    const college = emailDomain === 'nmamit.in' ? 'NMAMIT' : 'Other';
-    
-    // Check if the user is an admin
-    const isAdmin = allowedAdminEmails.includes(email);
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: `${getCurrentDomain()}/auth/google/callback`,
+    proxy: true
+  }, async (accessToken, refreshToken, profile, done) => {
+    try {
+      const email = profile.emails[0].value;
+      const emailDomain = email.split('@')[1];
+      const college = emailDomain === 'nmamit.in' ? 'NMAMIT' : 'Other';
+  
+      // ZZZZZZZ - Check if user is not an admin and belongs to the whitelisted domains
 
-    let user = await User.findOne({ googleId: profile.id });
-    if (user) {
-      user.isAdmin = isAdmin; // Update admin status
-      await user.save();
-      return done(null, user);
-    } else {
-      const newUser = new User({
-        googleId: profile.id,
-        name: profile.displayName,
-        email: email,
-        profilePicture: profile.photos[0].value,
-        college: college,
-        isAdmin: isAdmin
-      });
-      await newUser.save();
-      return done(null, newUser);
+      const isAdmin = allowedAdminEmails.includes(email); // Check if the user is an admin
+  
+      // If not admin, check if the user's domain is whitelisted
+      if (!isAdmin && !allowedDomains.includes(emailDomain)) {
+        
+        return done(null, false, { message: 'Unauthorized: Email domain is not whitelisted.' });
+      }
+  
+      // Check if user already exists
+      let user = await User.findOne({ googleId: profile.id });
+      if (user) {
+        user.isAdmin = isAdmin; // Update admin status
+        await user.save();
+        return done(null, user);
+      } else {
+        // Create new user
+        const newUser = new User({
+          googleId: profile.id,
+          name: profile.displayName,
+          email: email,
+          profilePicture: profile.photos[0].value,
+          college: college,
+          isAdmin: isAdmin
+        });
+        await newUser.save();
+        return done(null, newUser);
+      }
+    } catch (err) {
+      console.error('Error in Google Strategy:', err);
+      return done(err, null);
     }
-  } catch (err) {
-    console.error('Error in Google Strategy:', err);
-    return done(err, null);
-  }
 }));
+  
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -72,7 +82,7 @@ router.get('/login', (req, res, next) => {
   passport.authenticate('google', { 
     scope: ['profile', 'email'],
     prompt: 'select_account',
-    callbackURL: `${currentDomain}/auth/google/callback`
+    callbackURL: `${getCurrentDomain()}/auth/google/callback`
   })(req, res, next);
 });
 
@@ -82,25 +92,29 @@ router.get('/google/callback', (req, res, next) => {
   passport.authenticate('google', {
     failureRedirect: '/',
     failureFlash: true,
-    callbackURL: '${currentDomain}/auth/google/callback'
+    callbackURL: `${getCurrentDomain()}/auth/google/callback`
   })(req, res, next);
 }, (req, res) => {
   res.redirect('/dashboard');
 });
 
-// Dashboard route with admin flag
-router.get('/dashboard', (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/auth/login');
+router.get('/auth/google/callback',
+  (req, res, next) => {
+    passport.authenticate('google', { 
+      failureRedirect: '/',
+      failureFlash: true // Enable flashing the failure message
+    })(req, res, next);
+  },
+  (req, res) => {
+    res.redirect('/dashboard'); // Redirect to the dashboard on success
   }
-  res.render('dashboard', { user: req.user });
-});
+);
+
 
 // Logout route
 router.get('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    req.flash('success_msg', 'You are logged out');
     res.redirect('/');
   });
 });
