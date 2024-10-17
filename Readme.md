@@ -1,6 +1,11 @@
 # Event-Hub
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+start mongodb server
+add .env file
+npm install
+npm start
+
+
 # Hackloop 2024 project.
 hello
 
@@ -20,11 +25,6 @@ hello
 * ~~flutterflow~~
 
 * docker linux with chatbot(flask) mongodb nodejs server
-=======
-Hackloop 2024 project.
-=======
-# Hackloop 2024 project.
->>>>>>> 0cafa23 (Update README.md)
 
 
 ## Event management : webbased(ejs,mongoose,express) 
@@ -49,6 +49,3 @@ Location maps(location of event hall)
 Find a teammate ()
 flutterflow
 `
->>>>>>> df7f194 (Update README.md)
-=======
->>>>>>> 0cafa23 (Update README.md)
