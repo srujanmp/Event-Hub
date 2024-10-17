@@ -1,6 +1,6 @@
 
-/node/node_modules
-/node/.env
+/node_modules
+/.env
 /.devcontainer
 /.github
 
