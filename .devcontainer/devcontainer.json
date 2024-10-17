@@ -18,7 +18,7 @@
 				"mongodb.mongodb-vscode"
 			]
 		}
-	}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [3000, 27017],
@@ -27,5 +27,5 @@
 	// "postCreateCommand": "yarn install",
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "root"
 }
