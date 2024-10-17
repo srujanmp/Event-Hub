@@ -96,7 +96,7 @@
     color: #5d6d7e;
     margin: 0; /* Remove default margins for better control */
     line-height: 1.5;
-    font-size: 1rem;
+    font-size: 0.7rem;
 }
 
 .event-item strong {
