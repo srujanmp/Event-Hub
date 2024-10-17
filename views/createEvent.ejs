@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <link rel="stylesheet" href="/path/to/your/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Create New Event</h2>
+        <form action="/admin/createevent" method="POST" enctype="multipart/form-data">
+            <!-- Event Name -->
+            <div class="form-group">
+                <label for="eventName">Event Name</label>
+                <input type="text" id="eventName" name="eventName" required>
+            </div>
+            
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            
+            <!-- Venue -->
+            <div class="form-group">
+                <label for="venue">Venue</label>
+                <input type="text" id="venue" name="venue" required>
+            </div>
+            
+            <!-- Max No of Volunteers Required -->
+            <div class="form-group">
+                <label for="maxVolunteers">Max No of Volunteers Required</label>
+                <input type="number" id="maxVolunteers" name="maxVolunteers" required>
+            </div>
+            
+            <!-- Max No of Participants Allowed -->
+            <div class="form-group">
+                <label for="maxParticipants">Max No of Participants Allowed</label>
+                <input type="number" id="maxParticipants" name="maxParticipants" required>
+            </div>
+            
+            <!-- Date of Event -->
+            <div class="form-group">
+                <label for="eventDate">Date of Event</label>
+                <input type="date" id="eventDate" name="dateOfEvent" required>
+            </div>
+            
+            <!-- Event Start Time -->
+            <div class="form-group">
+                <label for="eventTimeStart">Event Start Time</label>
+                <input type="time" id="eventTimeStart" name="eventStartTime" required>
+            </div>
+            
+            <!-- Event End Time -->
+            <div class="form-group">
+                <label for="eventTimeEnd">Event End Time</label>
+                <input type="time" id="eventTimeEnd" name="eventEndTime" required>
+            </div>
+            
+            <!-- Registration Period Ending -->
+            <div class="form-group">
+                <label for="registrationEndDate">Registration Period Ending</label>
+                <input type="date" id="registrationEndDate" name="registrationEnd" required>
+            </div>
+            
+            <!-- Club Name Dropdown -->
+            <div class="form-group">
+                <label for="clubName">Club Name</label>
+                <select id="clubName" name="clubName" required>
+                    <option value="VISTA">VISTA</option>
+                    <option value="FLC">FLC</option>
+                    <option value="TEDx">TEDx</option>
+                    <option value="CSI">CSI</option>
+                    <option value="MUN">MUN</option>
+                </select>
+            </div>
+            
+            <!-- Event Image Poster -->
+            <div class="form-group">
+                <label for="eventImage">Event Image Poster:</label>
+                <input type="file" name="eventImage" id="eventImage" required />
+            </div>
+            
+            <button type="submit">Create Event</button>
+        </form>
+    </div>
+</body>
+</html>

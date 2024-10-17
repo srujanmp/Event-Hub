@@ -6,6 +6,8 @@ const flash = require('connect-flash');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard'); 
+const adminRoutes = require('./routes/adminRoutes'); 
+
 require('dotenv').config();
 
 const app = express();
@@ -24,7 +26,9 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Body parser middleware
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 
 // Express session middleware
@@ -55,9 +59,13 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+
+
 // Auth routes
 app.use('/auth', authRoutes);
 app.use('/', dashboardRoutes);
+app.use('/admin', adminRoutes); 
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
