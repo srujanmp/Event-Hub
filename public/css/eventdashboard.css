@@ -107,6 +107,7 @@
 
 /* Registration Stats */
 .registration-stats {
+    width:100%;
     display: flex;
     gap: 20px;
     padding: 15px 20px;
@@ -188,4 +189,88 @@
     .events-section h2 {
         font-size: 1.75rem;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+.event-item {
+    display: flex;
+    justify-content: space-between; /* Space out the content */
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    position: relative;
+}
+
+.event-main-content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.event-image img {
+    
+    height: auto;
+   
+}
+
+.event-details {
+    flex-grow: 1;
+}
+
+.delete-form {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push the delete button to the right */
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+
+
+.delete-form {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+} 
+
+.delete-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
 }

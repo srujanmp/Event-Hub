@@ -75,38 +75,45 @@
 
     <div class="dashboard-content">
         <h1>Welcome, <%= user.name %>!</h1>
-        <div class="events-section">
-            <h2>Upcoming Events</h2>
-            <div class="events-list">
-                <% events.forEach(event => { %>
-                    <div class="event-item">
-                        <div class="event-main-content">
-                            <div class="event-image">
-                                <img src="/<%= event.eventPoster %>" alt="Event Poster">
-                            </div>
-                            <div class="event-details">
-                                <h3><%= event.eventName %></h3>
-                                <p><%= event.description %></p>
-                                <p><strong>Venue:</strong> <%= event.venue %></p>
-                                <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
-                                <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
-                                <a href="/register/<%= event._id %>" class="register-btn">Register</a>
-                            </div>
+        <div class="events-list">
+            <% events.forEach(event => { %>
+                <div class="event-item">
+                    <div class="event-main-content">
+                        <div class="event-image">
+                            <img src="/<%= event.eventPoster %>" alt="Event Poster">
                         </div>
-                        <div class="registration-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">Participants</div>
-                                <div class="stat-value"><%= event.registeredUsers.length %>/<%= event.maxParticipants %></div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Volunteers</div>
-                                <div class="stat-value"><%= event.registeredVolunteers.length %>/<%= event.maxVolunteers %></div>
-                            </div>
+                        <div class="event-details">
+                            <h3><%= event.eventName %></h3>
+                            <p><%= event.description %></p>
+                            <p><strong>Venue:</strong> <%= event.venue %></p>
+                            <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
+                            <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
+                            <a href="/register/<%= event._id %>" class="register-btn">Register</a>
+                            
+                            <!-- Only show delete button for the event creator -->
+                <% if (user._id.toString() === event.creator.toString()) { %>
+                    <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
+                        <button type="submit" class="delete-btn">
+                            <img src="/images/bin.png" alt="Delete" class="delete-icon">
+                        </button>
+                    </form>
+                <% } %>
                         </div>
                     </div>
-                <% }) %>
-            </div>
+                    <div class="registration-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Participants</div>
+                            <div class="stat-value"><%= event.registeredUsers.length %>/<%= event.maxParticipants %></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Volunteers</div>
+                            <div class="stat-value"><%= event.registeredVolunteers.length %>/<%= event.maxVolunteers %></div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
         </div>
+        
         
     </div>
 </body>

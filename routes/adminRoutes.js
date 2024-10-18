@@ -65,4 +65,38 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
   }
 });
 
+
+
+
+router.post('/deleteevent/:id', async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    
+    // Find the event by ID and check if the user is the creator or an admin
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      req.flash('error_msg', 'Event not found.');
+      return res.redirect('/dashboard');
+    }
+
+    if (req.user.isAdmin || req.user._id.toString() === event.creator.toString()) {
+      await Event.findByIdAndDelete(eventId);
+      req.flash('success_msg', 'Event deleted successfully.');
+    } else {
+      req.flash('error_msg', 'Unauthorized action.');
+    }
+
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error(error);
+    req.flash('error_msg', 'Error deleting event.');
+    res.redirect('/dashboard');
+  }
+});
+
+
+
+
+
 module.exports = router;

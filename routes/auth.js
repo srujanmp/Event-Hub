@@ -6,7 +6,7 @@ const User = require('../models/User');
 require('dotenv').config();
 
 // Hardcoded admin emails
-const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'mithunmallya97@gmail.com','sumukharao@gmail.com'];
+const allowedAdminEmails = ['srujanmpadmashali@gmail.com', 'mithunmallya97@gmail.com','sumukharao@gmail.com','shreyasrujan1521@gmail.com'];
 
 // Allowed email domains
 const allowedDomains = ['nmamit.in'];
