@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = require('../models/User');
+
 
 const EventSchema = new mongoose.Schema({
     eventDescription: {
@@ -11,12 +13,11 @@ const EventSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    /*usersInterested: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],*/
+    usersInterested: {
+        type: [mongoose.Schema.Types.ObjectId], // Array of user IDs
+        ref: 'User',
+        default: []
+    },
     createdAt: {
         type: Date,
         default: Date.now

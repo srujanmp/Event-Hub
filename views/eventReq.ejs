@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Event Requests</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        /* General styling */
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
@@ -28,12 +23,80 @@
         }
 
         h2 {
-            text-align: center;
             color: #2c3e50;
-            margin-bottom: 2rem;
-            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
+        .event-requests {
+            margin-bottom: 2rem;
+        }
+
+        .event-request-item {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        button[type="button"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        button[type="button"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e74c3c;
+        }
+
+        .close-button:hover {
+            color: #c0392b;
+        }
+
+        /* Form styling inside the modal */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -41,102 +104,114 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #2c3e50;
         }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        input[type="time"],
-        select,
-        textarea {
+        textarea, button[type="submit"] {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        input[type="file"] {
-            padding: 0.5rem 0;
+            margin-top: 0.5rem;
         }
 
         button[type="submit"] {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            background-color: #3498db;
+            background-color: #2ecc71;
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
             font-size: 1.1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
         button[type="submit"]:hover {
-            background-color: #2980b9;
-        }
-
-        .image-preview-container {
-            margin-top: 1rem;
-            text-align: center;
-            display: none;
-        }
-
-        .image-preview {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
+            background-color: #27ae60;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Request Event</h2>
-        <form action="/event-request" method="POST">
-            <div class="form-group">
-                <label for="eventDescription">Event Description</label>
-                <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+        <h2>Event Requests</h2>
+
+        <!-- Display actual event requests -->
+        <div class="event-requests">
+            <% if (eventRequests.length > 0) { %>
+                <% eventRequests.forEach(event => { %>
+                    <div class="event-request-item">
+                        <p><strong>Description:</strong> <%= event.eventDescription %></p>
+                        <p><strong>Expectations:</strong> <%= event.eventExpectation %></p>
+                        <p><strong>Interested:</strong> <span id="interested-count-<%= event._id %>"><%= event.usersInterested.length %></span> people</p>
+                        <button type="button" onclick="toggleInterest('<%= event._id %>')">
+                            Interested in this event
+                        </button>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No event requests available.</p>
+            <% } %>
+        </div>
+
+        <!-- Button to show the modal -->
+        <button type="button" onclick="showModal()">Request a New Event</button>
+
+        <!-- Modal structure -->
+        <div class="modal-overlay" id="modalOverlay" onclick="overlayClick(event)">
+            <div class="modal">
+                <button class="close-button" onclick="closeModal()">&times;</button>
+                <h3>Request Event</h3>
+                <form action="/event-request" method="POST">
+                    <div class="form-group">
+                        <label for="eventDescription">Event Description</label>
+                        <textarea id="eventDescription" name="eventDescription" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventExpectation">Expectations</label>
+                        <textarea id="eventExpectation" name="eventExpectation" rows="4" required></textarea>
+                    </div>
+                    <button type="submit">Request Event</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="eventExpectation">Expectations</label>
-                <textarea id="eventExpectation" name="eventExpectation" rows="4" required></textarea>
-            </div>
-            <button type="submit">Request Event</button>
-        </form>
+        </div>
     </div>
 
     <script>
-        
+
+        async function toggleInterest(eventId) {
+            try {
+                const response = await fetch(`/eventreq/${eventId}/toggle-interest`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update interest');
+                }
+
+                const data = await response.json();
+                // Update the interested count displayed on the button
+                document.getElementById(`interested-count-${eventId}`).textContent = data.interestedCount;
+            } catch (error) {
+                console.error('Error toggling interest:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+        // Function to show the modal
+        function showModal() {
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        // Function to close the modal when clicking outside the modal content
+        function overlayClick(event) {
+            if (event.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
