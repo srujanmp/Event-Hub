@@ -76,7 +76,13 @@
     <div class="dashboard-content">
         <h1>Welcome, <%= user.name %>!</h1>
         <div class="events-list">
-            <% events.forEach(event => { %>
+            <% events.forEach(event => { 
+                const currentTime = new Date();
+                const registrationOpen = currentTime < event.registrationEnd;
+                const eventStarted = currentTime >= event.dateOfEvent && currentTime < event.eventEndTime;
+                const eventEnded = currentTime > event.eventEndTime;
+                const feedbackAvailable = eventEnded && currentTime <= new Date(event.eventEndTime.getTime() + 7 * 24 * 60 * 60 * 1000);
+            %>
                 <div class="event-item">
                     <div class="event-main-content">
                         <div class="event-image">
@@ -88,16 +94,38 @@
                             <p><strong>Venue:</strong> <%= event.venue %></p>
                             <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
                             <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
-                            <a href="/register/<%= event._id %>" class="register-btn">Register</a>
-                            
+    
+                            <!-- Button container to hold buttons side by side -->
+<div class="event-buttons">
+    <!-- Register button -->
+    <% if (registrationOpen) { %>
+        <a href="/register/<%= event._id %>" class="register-btn">Register Now</a>
+    <% } else { %>
+        <button class="register-btn disabled">Registration Closed</button>
+    <% } %>
+
+    <!-- Attendance button -->
+    <% if (eventStarted && !eventEnded) { %>
+        <a href="/attendance/<%= event._id %>" class="attendance-btn">Mark Attendance</a>
+    <% } else { %>
+        <button class="attendance-btn disabled">Attendance</button>
+    <% } %>
+
+    <!-- Feedback button -->
+    <% if (feedbackAvailable) { %>
+        <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
+    <% } else { %>
+        <button class="feedback-btn disabled">Feedback</button>
+    <% } %>
+</div>
                             <!-- Only show delete button for the event creator -->
-                <% if (user._id.toString() === event.creator.toString()) { %>
-                    <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
-                        <button type="submit" class="delete-btn">
-                            <img src="/images/bin.png" alt="Delete" class="delete-icon">
-                        </button>
-                    </form>
-                <% } %>
+                            <% if (user._id.toString() === event.creator.toString()) { %>
+                                <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
+                                    <button type="submit" class="delete-btn">
+                                        <img src="/images/bin.png" alt="Delete" class="delete-icon">
+                                    </button>
+                                </form>
+                            <% } %>
                         </div>
                     </div>
                     <div class="registration-stats">
@@ -113,8 +141,8 @@
                 </div>
             <% }) %>
         </div>
-        
-        
     </div>
+    
+    
 </body>
 </html>

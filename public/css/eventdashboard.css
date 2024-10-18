@@ -132,7 +132,7 @@
     color: #2c3e50;
 }
 
-/* Register Button Styles */
+/* Register Button Styles
 .register-btn {
     display: inline-block;
     padding: 12px 30px;
@@ -148,7 +148,7 @@
     transition: background-color 0.2s ease;
     text-decoration: none;
     align-self: flex-start;
-}
+} */
 
 .register-btn:hover {
     background-color: #2980b9;
@@ -274,3 +274,73 @@
     width: 20px;
     height: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Container for event buttons */
+.event-buttons {
+    display: flex;
+    gap: 15px; /* Consistent spacing between buttons */
+    margin-top: 20px;
+    align-items: center; /* Ensure buttons are vertically aligned */
+}
+
+/* Unified button styles for all three buttons */
+.register-btn,
+.attendance-btn,
+.feedback-btn {
+    min-width: 120px; /* Ensure minimum width for consistency */
+    height: 44px; /* Fixed height for all buttons */
+    display: inline-flex; /* Use flex for better content alignment */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 0 20px; /* Horizontal padding */
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    line-height: 1; /* Prevent line height from affecting button size */
+}
+
+.register-btn:hover,
+.attendance-btn:hover,
+.feedback-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+.register-btn:active,
+.attendance-btn:active,
+.feedback-btn:active {
+    transform: translateY(0);
+}
+
+/* Disabled state for buttons */
+.disabled {
+    background-color: #cbd5e1 !important; /* Light gray for disabled state */
+    cursor: not-allowed !important;
+    pointer-events: none;
+    opacity: 0.7;
+    transform: none !important;
+}
+
