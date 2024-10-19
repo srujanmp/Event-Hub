@@ -10,7 +10,30 @@
 * {
         margin: 0;
         padding: 0;
-        /* box-sizing: border-box; */
+        box-sizing: border-box;
         font-family: "Poppins", sans-serif;
-        /* font-family: "Archivo", sans-serif; */
 }
+
+body {
+
+        background: linear-gradient(135deg, rgb(255, 255, 255), rgba(151, 151, 151, 0.9));
+        animation: gradientFlow 5s ease infinite;
+        background-size: 200% 200%;
+        color: white;
+
+}
+
+@keyframes gradientFlow {
+        0% {
+                background-position: 0% 50%;
+        }
+
+        50% {
+                background-position: 100% 50%;
+        }
+
+        100% {
+                background-position: 0% 50%;
+        }
+}
+
