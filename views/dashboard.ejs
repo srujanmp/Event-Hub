@@ -100,23 +100,23 @@
 <div class="event-buttons">
     <!-- Register button -->
     <% if (registrationOpen) { %>
-        <a href="/register/<%= event._id %>" class="register-btn">Register Now</a>
+        <a href="/register/<%= event._id %>" class="register-btn">Register</a>
     <% } else { %>
-        <button class="register-btn disabled">Registration Closed</button>
+        <button class="register-btn disabled">Closed</button>
     <% } %>
 
     <!-- Attendance button -->
     <% if (eventStarted && !eventEnded) { %>
         <a href="/attendance/<%= event._id %>" class="attendance-btn">Mark Attendance</a>
     <% } else { %>
-        <button class="attendance-btn disabled">Attendance</button>
+        <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
     <% } %>
 
     <!-- Feedback button -->
     <% if (feedbackAvailable) { %>
         <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
     <% } else { %>
-        <button class="feedback-btn disabled">Feedback</button>
+        <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
     <% } %>
 </div>
                             <!-- Only show delete button for the event creator -->
