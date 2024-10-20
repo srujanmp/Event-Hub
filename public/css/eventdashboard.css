@@ -187,6 +187,7 @@
     bottom: 20px
 }
 
+
 .delete-btn {
     background: 0 0;
     border: none;
@@ -199,6 +200,33 @@
 }
 
 .delete-icon {
+    width: 20px;
+    height: 20px
+}
+
+
+.more-form {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    position: absolute;
+    left: 20px;
+    bottom: 20px
+}
+
+
+.more-btn {
+    background: 0 0;
+    border: none;
+    padding: 0;
+    cursor: pointer
+}
+
+.more-btn:hover {
+    opacity: .8
+}
+
+.more-icon {
     width: 20px;
     height: 20px
 }

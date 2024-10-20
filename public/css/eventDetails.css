@@ -1,0 +1,59 @@
+
+
+
+h1, h2 {
+    color:black;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+/* Container for the list of users */
+.users-list {
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+    align-items: center;    /* Center the content horizontally */
+    justify-content: center;
+    gap: 0px;              /* Add space between items */
+    margin-bottom: 0px;    /* Add some space below the list */
+}
+
+/* Style for individual user items */
+.user-item {
+    display: flex;
+    flex-direction: column; /* Stack the image and name vertically */
+    align-items: center;    /* Center the content within each user item */
+    text-align: center;
+    padding: 0px;
+}
+
+/* Style for the profile pictures */
+.other-profile-pic {
+    width: 30px;            /* Set the profile picture size */
+    height: 30px;
+    border-radius: 50%;     /* Make the image round */
+    object-fit: cover;      /* Ensure the image covers the entire area */
+    margin-bottom: 0px;    /* Add some space below the image */
+    border: 2px solid #ddd; /* Optional: Add a border around the image */
+}
+
+/* Center the headings */
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Center the "No participants/volunteers" message */
+p.pcentered {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+}

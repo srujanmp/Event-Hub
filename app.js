@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard'); 
 const adminRoutes = require('./routes/adminRoutes'); 
 const eventReq = require('./routes/eventReq'); 
+const userOperations=require('./routes/userOp');
+const eventRoutes=require('./routes/event');
 
 require('dotenv').config();
 
@@ -67,6 +69,8 @@ app.use('/auth', authRoutes);
 app.use('/', dashboardRoutes);
 app.use('/admin', adminRoutes); 
 app.use(eventReq); 
+app.use(userOperations);
+app.use(eventRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

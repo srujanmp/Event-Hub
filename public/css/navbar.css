@@ -1,0 +1,45 @@
+  
+
+.navbar {
+    background-color: #333; /* Dark background for the navbar */
+    padding: 10px 20px; /* Padding for the navbar */
+}
+
+.container {
+    display: flex; /* Flexbox for layout */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center items vertically */
+}
+
+.nav-links {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Horizontal layout for links */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.nav-links li {
+    margin-right: 20px; /* Spacing between items */
+    display: flex; /* Use flex to center align items */
+    align-items: center; /* Center align items vertically */
+}
+
+.nav-links a {
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 12px; /* Padding for links */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.nav-links a:hover {
+    background-color: #555; /* Darker background on hover */
+}
+
+.profile-pic {
+    width: 30px; /* Width of profile picture */
+    height: 30px; /* Height of profile picture */
+    border-radius: 50%; /* Circle shape */
+    margin-right: 8px; /* Space between the image and the link */
+    object-fit: cover; /* Ensure the image covers the box */
+}
