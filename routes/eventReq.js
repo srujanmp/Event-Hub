@@ -13,7 +13,7 @@ router.get('/eventreq', async (req, res) => {
         const eventRequests = await EventRequest.find();
 
         // Render the eventReq view with the fetched event requests
-        res.render('eventReq', { eventRequests });
+        res.render('eventReq', { eventRequests ,user:req.user});
     } catch (error) {
         console.error('Error fetching event requests:', error);
         req.flash('error_msg', 'Error fetching event requests.');

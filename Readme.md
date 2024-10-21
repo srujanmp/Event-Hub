@@ -10,7 +10,7 @@ npm start
 hello
 
 ## Event management : webbased(ejs,mongoose,express) 
-* firebase auth
+* google auth
 * chatbot
 * User access(student access):event request, participate into event
 * admin panel-event manager : register event

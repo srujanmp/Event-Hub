@@ -8,18 +8,12 @@
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script> <!-- Include html5-qrcode -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <style>
-        #reader {
-            width: 500px;
-            height: 500px;
-            margin: 0 auto;
-        }
-        .qr-info {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/scan_qrcode.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/_default.css">
 </head>
 <body>
+    <%- include('_navbar') %>
 
     <h1 class="qr-info">Scan Users QR Code</h1>
     

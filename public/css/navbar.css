@@ -5,7 +5,7 @@
     padding: 10px 20px; /* Padding for the navbar */
 }
 
-.container {
+.xcontainer {
     display: flex; /* Flexbox for layout */
     justify-content: space-between; /* Space between items */
     align-items: center; /* Center items vertically */

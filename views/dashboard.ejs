@@ -6,30 +6,15 @@
     <title>User Dashboard</title>
     
     <link rel="stylesheet" href="css/dashboard.css"> <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="css/eventdashboard.css"> <!-- Link to your CSS file -->
+
     <link rel="stylesheet" href="css/navbar.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/css/_default.css">
    <style>
   
    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <ul class="nav-links">
-                <li><a href="/dashboard"><img src="images/home.webp" width="20" alt=""></a></li>
-              
-                    <a href="/user/profile">
-                        <img src="<%= user.profilePicture %>" alt="" class="profile-pic">
-                    </a>
-                
-                <li><a href="/auth/logout">Logout</a></li>
-                <% if (user.isAdmin) { %>
-                    <li><a href="/admin/create-event" class="create-event-btn">Create Event</a></li>
-                <% } %>
-                <li><a href="/eventreq">Request Event</a></li>
-            </ul>
-        </div>
-    </nav>
+    <%- include('_navbar') %>
 
     <div class="dashboard-content">
         <center><h1>Welcome, <%= user.name %>!</h1></center>

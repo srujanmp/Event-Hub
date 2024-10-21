@@ -20,7 +20,7 @@ router.get('/create-event', (req, res) => {
     req.flash('error_msg', 'Unauthorized access.');
     return res.redirect('/auth/login');
   }
-  res.render('createEvent'); // Render the form
+  res.render('createEvent', {user:req.user}); // Render the form
 });
 
 // Route to handle event creation form submission

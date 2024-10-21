@@ -5,7 +5,7 @@ const Event = require('../models/Event');
 
 // Admin scans QR code and marks attendance for the user
 router.get('/admin/attendance/:eventId', (req, res) => {
-    res.render('scan_qrcode', { eventId: req.params.eventId });
+    res.render('scan_qrcode', { eventId: req.params.eventId, user:req.user });
 });
 
 router.post('/admin/attendance/:eventId', async (req, res) => {
