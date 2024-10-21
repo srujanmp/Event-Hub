@@ -8,30 +8,30 @@ router.get('/admin/attendance/:eventId', (req, res) => {
     res.render('scan_qrcode', { eventId: req.params.eventId, user:req.user });
 });
 
-router.post('/admin/attendance/:eventId', async (req, res) => {
-    try {
-        const eventId = req.params.eventId;
-        const event = await Event.findById(eventId);
+// router.post('/admin/attendance/:eventId', async (req, res) => {
+//     try {
+//         const eventId = req.params.eventId;
+//         const event = await Event.findById(eventId);
 
-        if (!event) {
-            return res.status(404).send('Event not found');
-        }
+//         if (!event) {
+//             return res.status(404).send('Event not found');
+//         }
 
-        const userId = req.body.userId;  // Extracted from the scanned QR code
+//         const userId = req.body.userId;  // Extracted from the scanned QR code
 
-        // Check if the user is already marked as attending
-        if (!event.attendees.includes(userId)) {
-            event.attendees.push(userId);
-            await event.save();
-            res.json({ success: true, message: 'Attendance marked successfully.' });
-        } else {
-            res.json({ success: false, message: 'User already marked as attended.' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
-    }
-});
+//         // Check if the user is already marked as attending
+//         if (!event.attendees.includes(userId)) {
+//             event.attendees.push(userId);
+//             await event.save();
+//             res.json({ success: true, message: 'Attendance marked successfully.' });
+//         } else {
+//             res.json({ success: false, message: 'User already marked as attended.' });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Server error');
+//     }
+// });
 
 router.get('/admin/mark-attendance/:userId/:eventId', async (req, res) => {
     try {

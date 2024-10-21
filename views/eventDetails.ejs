@@ -1,205 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= event.eventName %> - Event Details</title>
-    <link rel="stylesheet" href="/css/eventDetails.css"> <!-- Add your custom CSS here -->
-    <link rel="stylesheet" href="/css/dashboard.css"> <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="/css/navbar.css"> <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="/css/_default.css">
-   <style>
-  
-   </style>
-</head>
-<body>
-    <%- include('_navbar') %>
 
-    <div class="dashboard-content">
-        <h1>Welcome, <%= user.name %>!</h1>
-        <div class="events-list">
-            <% 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= event.eventName %> - Event Details</title>
+  <link rel="stylesheet" href="/css/eventDetails.css"> <!-- Add your custom CSS here -->
+  <link rel="stylesheet" href="/css/dashboard.css"> <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="/css/navbar.css"> <!-- Link to your CSS file -->
+  <link rel="stylesheet" href="/css/_default.css">
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <%- include('_navbar') %>
+
+  <div class="dashboard-content">
+    <h1>Welcome, <%= user.name %>!</h1>
+    <div class="events-list">
+      <% 
                 const currentTime = new Date();
                 const registrationOpen = currentTime < event.registrationEnd;
                 const eventStarted = currentTime >= event.dateOfEvent;
                 const eventEnded = currentTime > event.eventEndTime;
                 const feedbackAvailable = eventEnded && currentTime <= new Date(event.eventEndTime.getTime() + 7 * 24 * 60 * 60 * 1000);
             %>
-            <div class="event-item ">
-                <div class="event-main-content">
-                    <div class="event-image">
-                        <img src="/<%= event.eventPoster %>" alt="Event Poster">
-                    </div>
-                    <div class="event-details">
-                            <h3><%= event.eventName %></h3>
-                            <p><%= event.description %></p>
-                            <p><strong>Venue:</strong> <%= event.venue %></p>
-                            <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
-                            <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
-    
-                            <!-- Button container to hold buttons side by side -->
-                            <div class="event-buttons">
-                           <!-- Register button -->
-<% if (registrationOpen) { %>
-    <% if (event2.registeredUsers.includes(user._id)) { %>
-        <a href="/register/<%= event._id %>" class="register-btn agree">Registered</a>
-    <% } else { %>
-        <a href="/register/<%= event._id %>" class="register-btn agree">Register</a>
-    <% } %>
-<% } else { %>
-    <button class="register-btn disabled">Closed</button>
-<% } %>
+      <div class="event-item ">
+        <div class="event-main-content">
+          <div class="event-image">
+            <img src="/<%= event.eventPoster %>" alt="Event Poster">
+          </div>
+          <div class="event-details">
+            <h3><%= event.eventName %></h3>
+            <p><%= event.description %></p>
+            <p><strong>Venue:</strong> <%= event.venue %></p>
+            <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
+            <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
 
-<!-- Volunteer button -->
-<% if (registrationOpen) { %>
-    <% if (event2.registeredVolunteers.includes(user._id)) { %>
-        <a href="/volunteer/<%= event._id %>" class="register-btn agree">Volunteering</a>
-    <% } else { %>
-        <a href="/volunteer/<%= event._id %>" class="register-btn agree">Volunteer</a>
-    <% } %>
-<% } else { %>
-    <button class="register-btn disabled">Closed</button>
-<% } %>
+            <!-- Button container to hold buttons side by side -->
+            <div class="event-buttons">
+              <!-- Register button -->
+              <% if (registrationOpen) { %>
+              <% if (event2.registeredUsers.includes(user._id)) { %>
+              <a href="/register/<%= event._id %>" class="register-btn agree">Registered</a>
+              <% } else { %>
+              <a href="/register/<%= event._id %>" class="register-btn agree">Register</a>
+              <% } %>
+              <% } else { %>
+              <button class="register-btn disabled">Closed</button>
+              <% } %>
 
-
-                                <!-- Attendance button -->
-                                <% const currentDate = new Date(); %>
-                                <% const eventDate = new Date(event.dateOfEvent); %>
-                                
-                                <!-- Check if today's date is the event date -->
-                                <% if (currentDate.toDateString() === eventDate.toDateString()) { %>
-                                
-                                    <% if (eventStarted) { %>
-                                        <!-- Check if the user is the event creator -->
-                                        <% if (event2.creator.equals(user._id)) { %>
-                                            <!-- Admin (Event Creator) will be redirected to scan QR codes for marking attendance -->
-                                            <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
-                                        
-                                        <!-- Check if the user is a registered participant or volunteer -->
-                                        <% } else if (event2.registeredUsers.includes(user._id) || event2.registeredVolunteers.includes(user._id)) { %>
-                                            <!-- Normal user will be able to view their QR code for the event -->
-                                            <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
-                                        <% } else { %>
-                                            <!-- If the user is neither admin nor participant/volunteer, show nothing -->
-                                        <% } %>
-                                
-                                    <% } else { %>
-                                        <!-- Attendance is not available outside event time -->
-                                        <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
-                                    <% } %>
-                                
-                                <% } %>
-                                
-                            <!-- Feedback button -->
-                            <% if (feedbackAvailable) { %>
-                                <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
-                            <% } else { %>
-                                <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
-                            <% } %>
-                            </div>
+              <!-- Volunteer button -->
+              <% if (registrationOpen) { %>
+              <% if (event2.registeredVolunteers.includes(user._id)) { %>
+              <a href="/volunteer/<%= event._id %>" class="register-btn agree">Volunteering</a>
+              <% } else { %>
+              <a href="/volunteer/<%= event._id %>" class="register-btn agree">Volunteer</a>
+              <% } %>
+              <% } else { %>
+              <button class="register-btn disabled">Closed</button>
+              <% } %>
 
 
-                            <!-- Only show delete button for the event creator -->
-                            <% if (user._id.toString() === event.creator.toString()) { %>
-                                <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
-                                    <button type="submit" class="delete-btn">
-                                        <img src="/images/bin.png" alt="Delete" class="delete-icon">
-                                    </button>
-                                </form>
-                            <% } %>
-                    </div>
-                    </div>
-                    <div class="registration-stats">
-                        <div class="stat-item">
-                            <div class="stat-label">Participants</div>
-                            <div class="stat-value"><%= event.registeredUsers.length %>/<%= event.maxParticipants %></div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Volunteers</div>
-                            <div class="stat-value"><%= event.registeredVolunteers.length %>/<%= event.maxVolunteers %></div>
-                        </div>
-                    </div>
+              <!-- Attendance button -->
+              <% const currentDate = new Date(); %>
+              <% const eventDate = new Date(event.dateOfEvent); %>
 
+              <!-- Check if today's date is the event date -->
+              <% if (currentDate.toDateString() === eventDate.toDateString()) { %>
 
+              <% if (eventStarted) { %>
+              <!-- Check if the user is the event creator -->
+              <% if (event2.creator.equals(user._id)) { %>
+              <!-- Admin (Event Creator) will be redirected to scan QR codes for marking attendance -->
+              <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
 
+              <!-- Check if the user is a registered participant or volunteer -->
+              <% } else if (event2.registeredUsers.includes(user._id) || event2.registeredVolunteers.includes(user._id)) { %>
+              <!-- Normal user will be able to view their QR code for the event -->
+              <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
+              <% } else { %>
+              <!-- If the user is neither admin nor participant/volunteer, show nothing -->
+              <% } %>
 
+              <% } else { %>
+              <!-- Attendance is not available outside event time -->
+              <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
+              <% } %>
 
+              <% } %>
 
-
-
-
-
-
-
-
-
-
-
-
-                    <h2>Registered Participants</h2>
-<% if (event.registeredUsers.length > 0) { %>
-    <div class="users-list">
-        <% event.registeredUsers.forEach(user => { %>
-            <div class="user-item">
-                <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
-                <p class="pcentered"><%= user.name %></p>
+              <!-- Feedback button -->
+              <% if (feedbackAvailable) { %>
+              <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
+              <% } else { %>
+              <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
+              <% } %>
             </div>
-        <% }) %>
-    </div>
-<% } else { %>
-    <p class="pcentered">No participants registered yet.</p>
-<% } %>
-
-<h2>Volunteers</h2>
-<% if (event.registeredVolunteers.length > 0) { %>
-    <div class="users-list">
-        <% event.registeredVolunteers.forEach(user => { %>
-            <div class="user-item">
-                <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
-                <p class="pcentered"><%= user.name %></p>
-            </div>
-        <% }) %>
-    </div>
-<% } else { %>
-    <p   class="pcentered">No volunteers registered yet.</p>
-<% } %>
-
-<h2>Attendees</h2>
-<% if (event.attendees.length > 0) { %>
-    <div class="users-list">
-        <% event.attendees.forEach(user => { %>
-            <div class="user-item">
-                <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
-                <p class="pcentered"><%= user.name %></p>
-            </div>
-        <% }) %>
-    </div>
-<% } else { %>
-    <p   class="pcentered">No attendees yet.</p>
-<% } %>
 
 
-                </div>
-                
-            
+            <!-- Only show delete button for the event creator -->
+            <% if (user._id.toString() === event.creator.toString()) { %>
+            <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
+              <button type="submit" class="delete-btn">
+                <img src="/images/bin.png" alt="Delete" class="delete-icon">
+              </button>
+            </form>
+            <% } %>
+          </div>
+        </div>
+        <div class="registration-stats">
+          <div class="stat-item">
+            <div class="stat-label">Participants</div>
+            <div class="stat-value"><%= event.registeredUsers.length %>/<%= event.maxParticipants %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Volunteers</div>
+            <div class="stat-value"><%= event.registeredVolunteers.length %>/<%= event.maxVolunteers %></div>
+          </div>
         </div>
 
-        
+
+
+
+
+        <h2>Registered Participants</h2>
+        <% if (event.registeredUsers.length > 0) { %>
+        <div class="users-list">
+          <% event.registeredUsers.forEach(user => { %>
+          <div class="user-item">
+            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <p class="pcentered"><%= user.name %></p>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p class="pcentered">No participants registered yet.</p>
+        <% } %>
+
+        <h2>Volunteers</h2>
+        <% if (event.registeredVolunteers.length > 0) { %>
+        <div class="users-list">
+          <% event.registeredVolunteers.forEach(user => { %>
+          <div class="user-item">
+            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <p class="pcentered"><%= user.name %></p>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p class="pcentered">No volunteers registered yet.</p>
+        <% } %>
+
+        <h2>Attendees</h2>
+        <% if (event.attendees.length > 0) { %>
+        <div class="users-list">
+          <% event.attendees.forEach(user => { %>
+          <div class="user-item">
+            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <p class="pcentered"><%= user.name %></p>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p class="pcentered">No attendees yet.</p>
+        <% } %>
+
+
+      </div>
+
+
     </div>
-    <script>
-        // Confirmation for registration
-        document.querySelectorAll('.agree').forEach(button => {
-            button.addEventListener('click', function(event) {
-                const confirmAction = confirm('Are you sure you want to');
-                if (!confirmAction) {
-                    event.preventDefault();
-                }
-            });
-        });
-    
-       
-    </script>
-    
+
+
+  </div>
+  <script>
+    // Confirmation for registration
+    document.querySelectorAll('.agree').forEach(button => {
+      button.addEventListener('click', function(event) {
+        const confirmAction = confirm('Are you sure you want to');
+        if (!confirmAction) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
+
 
 </body>
+
 </html>
