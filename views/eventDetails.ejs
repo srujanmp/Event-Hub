@@ -131,7 +131,7 @@
         <div class="users-list">
           <% event.registeredUsers.forEach(user => { %>
           <div class="user-item">
-            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <img src="<%= user.profilePicture %>" alt="Profile Picture" onerror="this.onerror=null; this.src='/images/profile.webp';" class="other-profile-pic">
             <p class="pcentered"><%= user.name %></p>
           </div>
           <% }) %>
@@ -145,7 +145,7 @@
         <div class="users-list">
           <% event.registeredVolunteers.forEach(user => { %>
           <div class="user-item">
-            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <img src="<%= user.profilePicture %>" onerror="this.onerror=null; this.src='/images/profile.webp';" alt="Profile Picture" class="other-profile-pic">
             <p class="pcentered"><%= user.name %></p>
           </div>
           <% }) %>
@@ -159,7 +159,7 @@
         <div class="users-list">
           <% event.attendees.forEach(user => { %>
           <div class="user-item">
-            <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+            <img src="<%= user.profilePicture %>" onerror="this.onerror=null; this.src='/images/profile.webp';" alt="Profile Picture" class="other-profile-pic">
             <p class="pcentered"><%= user.name %></p>
           </div>
           <% }) %>

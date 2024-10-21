@@ -12,7 +12,7 @@
     <%- include('_navbar') %>
 
     <div class="qr-container">
-        <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-pic">
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" onerror="this.onerror=null; this.src='/images/profile.webp';" class="profile-pic">
         <h2>Scan this QR code to mark attendance</h2>
         <img src="<%= qrCode %>" width=300 alt="User QR Code">
     </div>
