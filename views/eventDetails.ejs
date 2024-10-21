@@ -87,12 +87,12 @@
                                 
                                     <% if (eventStarted) { %>
                                         <!-- Check if the user is the event creator -->
-                                        <% if (event.creator.equals(user._id)) { %>
+                                        <% if (event2.creator.equals(user._id)) { %>
                                             <!-- Admin (Event Creator) will be redirected to scan QR codes for marking attendance -->
                                             <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
                                         
                                         <!-- Check if the user is a registered participant or volunteer -->
-                                        <% } else if (event.registeredUsers.includes(user._id) || event.registeredVolunteers.includes(user._id)) { %>
+                                        <% } else if (event2.registeredUsers.includes(user._id) || event2.registeredVolunteers.includes(user._id)) { %>
                                             <!-- Normal user will be able to view their QR code for the event -->
                                             <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
                                         <% } else { %>
