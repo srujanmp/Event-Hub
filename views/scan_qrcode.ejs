@@ -19,54 +19,102 @@
 <body>
     <%- include('_navbar') %>
 
-        <h1 class="qr-info">Scan Users QR Code</h1>
+    <h1 class="qr-info">Scan Users QR Code</h1>
 
-        <div id="reader"></div> <!-- This div will hold the camera for QR scanning -->
+    <div>
+        <label for="cameraSelection">Select Camera:</label>
+        <select id="cameraSelection"></select>
+    </div>
 
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            const message = urlParams.get('message');
+    <div id="reader"></div> <!-- This div will hold the camera for QR scanning -->
 
-            if (message === 'attendance_marked') {
-                alert('Attendance marked successfully.');
-            } else if (message === 'already_marked') {
-                alert('User already marked for attendance.');
-            } else if (message === 'not_registered') {
-                alert('User is not registered for this event.');
+    <script>
+        let html5QrCode;  // Declare a global variable for QR code scanner
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+
+        if (message === 'attendance_marked') {
+            alert('Attendance marked successfully.');
+        } else if (message === 'already_marked') {
+            alert('User already marked for attendance.');
+        } else if (message === 'not_registered') {
+            alert('User is not registered for this event.');
+        }
+
+        // Function to start scanning with a specific camera
+        function startQrScanner(cameraId) {
+            if (html5QrCode) {
+                // Stop the existing QR code scanner if it exists
+                html5QrCode.stop().then(() => {
+                    console.log("QR scanner stopped.");
+                }).catch(err => {
+                    console.error("Failed to stop the QR scanner.", err);
+                });
             }
 
-
-            function onScanSuccess(qrCodeMessage) {
-                // Handle the scanned userId
-                const userId = qrCodeMessage;
-                const confirmAction = confirm(`Are you sure you want to mark attendance for User ID: ${userId}?`);
-
-                if (confirmAction) {
-                    // Redirect to a route to mark attendance (e.g., sending to server for confirmation)
-                    window.location.href = `/admin/mark-attendance/${userId}/<%= eventId %>`;
-                }
-            }
-
-            function onScanFailure(error) {
-                // Handle scan failure, no need to log
-            }
-
-            const html5QrCode = new Html5Qrcode("reader");
-
-            // Start scanning
+            html5QrCode = new Html5Qrcode("reader");  // Initialize a new scanner instance
             html5QrCode.start(
-                { facingMode: "environment" }, // Use the rear camera
+                { deviceId: { exact: cameraId } }, // Use the selected camera
                 {
                     fps: 10, // Scans per second
-                    aspectRatio: 1.0,
-                    qrbox: { width: 250, height: 250 } // Set QR scanning box size
+                    qrbox: { width: 250, height: 250 }, // Set QR scanning box size
+                    aspectRatio: 1.0
                 },
                 onScanSuccess,
                 onScanFailure
             ).catch(err => {
                 console.error("Unable to start QR scanner", err);
             });
-        </script>
+        }
+
+        function onScanSuccess(qrCodeMessage) {
+            // Handle the scanned userId
+            const userId = qrCodeMessage;
+            const confirmAction = confirm(`Are you sure you want to mark attendance for User ID: ${userId}?`);
+
+            if (confirmAction) {
+                // Redirect to a route to mark attendance (e.g., sending to server for confirmation)
+                window.location.href = `/admin/mark-attendance/${userId}/<%= eventId %>`;
+            }
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure, no need to log
+        }
+
+        // Populate camera selection dropdown
+        function getCameraDevices() {
+            const cameraSelection = document.getElementById('cameraSelection');
+            
+            navigator.mediaDevices.enumerateDevices().then(devices => {
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                
+                videoDevices.forEach((device, index) => {
+                    const option = document.createElement('option');
+                    option.value = device.deviceId;
+                    option.text = device.label || `Camera ${index + 1}`;
+                    cameraSelection.appendChild(option);
+                });
+
+                // Automatically start the scanner with the first available camera
+                if (videoDevices.length > 0) {
+                    startQrScanner(videoDevices[0].deviceId);
+                }
+            });
+        }
+
+        // When a camera is selected, start the scanner with that camera
+        document.getElementById('cameraSelection').addEventListener('change', (event) => {
+            const selectedCameraId = event.target.value;
+            startQrScanner(selectedCameraId);
+        });
+
+        // Load available cameras on page load
+        window.onload = () => {
+            getCameraDevices();
+        };
+    </script>
 </body>
 
 </html>
