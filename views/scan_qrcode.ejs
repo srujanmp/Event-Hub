@@ -26,6 +26,18 @@
     <div id="reader"></div> <!-- This div will hold the camera for QR scanning -->
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+const message = urlParams.get('message');
+
+if (message === 'attendance_marked') {
+    alert('Attendance marked successfully.');
+} else if (message === 'already_marked') {
+    alert('User already marked for attendance.');
+} else if (message === 'not_registered') {
+    alert('User is not registered for this event.');
+}
+
+
         function onScanSuccess(qrCodeMessage) {
             // Handle the scanned userId
             const userId = qrCodeMessage;
