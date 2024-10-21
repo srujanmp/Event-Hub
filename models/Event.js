@@ -15,8 +15,9 @@ const eventSchema = new Schema({
   clubName: String,
   eventPoster: String,
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  registeredUsers: [{ type: Schema.Types.ObjectId, ref: 'User',default:0 }],  // New field for registered users
-  registeredVolunteers: [{ type: Schema.Types.ObjectId, ref: 'User',default:0}]  // New field for registered volunteers
+  registeredUsers: [{ type: Schema.Types.ObjectId, ref: 'User', default: 0 }],
+  registeredVolunteers: [{ type: Schema.Types.ObjectId, ref: 'User', default: 0 }],
+  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }]  // New field for attendance
 });
 
 const Event = mongoose.model('Event', eventSchema);

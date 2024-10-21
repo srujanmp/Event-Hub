@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Attendance QR Code</title>
+    <style>
+        .qr-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .qr-container img {
+            max-width: 300px;
+            height: auto;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container">
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-pic">
+        <h2>Scan this QR code to mark attendance</h2>
+        <img src="<%= qrCode %>" alt="User QR Code">
+    </div>
+</body>
+</html>

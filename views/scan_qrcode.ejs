@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Attendance</title>
+    
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script> <!-- Include html5-qrcode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        #reader {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        .qr-info {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="qr-info">Scan Users QR Code</h1>
+    
+    <div id="reader"></div> <!-- This div will hold the camera for QR scanning -->
+
+    <script>
+        function onScanSuccess(qrCodeMessage) {
+            // Handle the scanned userId
+            const userId = qrCodeMessage;
+            const confirmAction = confirm(`Are you sure you want to mark attendance for User ID: ${userId}?`);
+
+            if (confirmAction) {
+                // Redirect to a route to mark attendance (e.g., sending to server for confirmation)
+                window.location.href = `/admin/mark-attendance/${userId}/<%= eventId %>`;
+            }
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure, no need to log
+        }
+
+        const html5QrCode = new Html5Qrcode("reader");
+
+        // Start scanning
+        html5QrCode.start(
+            { facingMode: "environment" }, // Use the rear camera
+            {
+                fps: 10, // Scans per second
+                qrbox: { width: 250, height: 250 } // Set QR scanning box size
+            },
+            onScanSuccess,
+            onScanFailure
+        ).catch(err => {
+            console.error("Unable to start QR scanner", err);
+        });
+    </script>
+</body>
+</html>

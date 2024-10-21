@@ -10,6 +10,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const eventReq = require('./routes/eventReq'); 
 const userOperations=require('./routes/userOp');
 const eventRoutes=require('./routes/event');
+const attendanceRoutes=require('./routes/attendance');
 
 require('dotenv').config();
 
@@ -71,6 +72,9 @@ app.use('/admin', adminRoutes);
 app.use(eventReq); 
 app.use(userOperations);
 app.use(eventRoutes);
+app.use(attendanceRoutes);
+
+
 
 // Start server
 const PORT = process.env.PORT || 5000;

@@ -37,10 +37,11 @@
             <% events.reverse().forEach(event => { 
                 const currentTime = new Date();
                 const registrationOpen = currentTime < event.registrationEnd;
-                const eventStarted = currentTime >= event.dateOfEvent && currentTime < event.eventEndTime;
+                const eventStarted = currentTime >= event.dateOfEvent;
                 const eventEnded = currentTime > event.eventEndTime;
                 const feedbackAvailable = eventEnded && currentTime <= new Date(event.eventEndTime.getTime() + 7 * 24 * 60 * 60 * 1000);
             %>
+
             <div class="event-item ">
                 <div class="event-main-content">
                     <div class="event-image">
@@ -78,20 +79,27 @@
 <% } %>
 
 
-                            <!-- Attendance button -->
-                            <% if (eventStarted && !eventEnded) { %>
-                                <a href="/attendance/<%= event._id %>" class="attendance-btn">Mark Attendance</a>
-                            <% } else { %>
-                                <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
-                            <% } %>
-    
-                            <!-- Feedback button -->
-                            <% if (feedbackAvailable) { %>
-                                <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
-                            <% } else { %>
-                                <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
-                            <% } %>
-                            </div>
+                                <!-- Attendance button -->
+<% if (eventStarted ) { %>
+    <% if (user.isAdmin) { %>
+        <!-- Admin will be redirected to scan QR codes for marking attendance -->
+        <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
+    <% } else { %>
+        <!-- Normal user will be able to view their QR code for the event -->
+        <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
+    <% } %>
+<% } else { %>
+    <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
+<% } %>
+
+<!-- Feedback button -->
+<% if (feedbackAvailable) { %>
+    <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
+<% } else { %>
+    <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
+<% } %>
+
+                                </div>
 
 
                             <!-- Only show delete button for the event creator -->
