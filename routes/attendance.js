@@ -35,26 +35,30 @@ router.post('/admin/attendance/:eventId', async (req, res) => {
 
 router.get('/admin/mark-attendance/:userId/:eventId', async (req, res) => {
     try {
-        const eventId = req.params.eventId;
-        const userId = req.params.userId;
+        const { eventId, userId } = req.params;
 
+        // Find the event by ID
         const event = await Event.findById(eventId);
         if (!event) {
             return res.status(404).send('Event not found');
         }
 
-        // Add the user to registered users or mark as attended (custom logic)
-        if (!event.registeredUsers.includes(userId)) {
-            event.registeredUsers.push(userId);
-            await event.save();
-            return res.send('Attendance marked successfully.');
+        // Check if the user is already marked as attended
+        if (event.attendees.some(attendee => attendee.equals(userId))) {
+            return res.send('User already marked for attendance.');
         }
 
-        return res.send('User already marked for attendance.');
+        // Mark the user as attended
+        event.attendees.push(userId);
+        await event.save();
+
+        return res.send('Attendance marked successfully.');
     } catch (error) {
+        console.error(error);
         return res.status(500).send('Server error');
     }
 });
+
 
 // User QR Code display for the specific event
 router.get('/attendance/:eventId', async (req, res) => {

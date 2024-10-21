@@ -13,7 +13,8 @@ router.get('/event/:eventId', async (req, res) => {
         // Find the event by ID and populate registeredUsers and registeredVolunteers with their names and profile pictures
         const event = await Event.findById(req.params.eventId)
             .populate('registeredUsers', 'name profilePicture')
-            .populate('registeredVolunteers', 'name profilePicture');
+            .populate('registeredVolunteers', 'name profilePicture')
+            .populate('attendees','name profilePicture');
         const event2=await Event.findById(req.params.eventId);
 
         if (!event) {

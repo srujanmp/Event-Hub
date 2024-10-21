@@ -64,7 +64,7 @@
         <a href="/register/<%= event._id %>" class="register-btn agree">Register</a>
     <% } %>
 <% } else { %>
-    <button class="register-btn disabled">Closed</button>
+    <button class="register-btn disabled">closed</button>
 <% } %>
 
 <!-- Volunteer button -->
@@ -75,22 +75,38 @@
         <a href="/volunteer/<%= event._id %>" class="register-btn agree">Volunteer</a>
     <% } %>
 <% } else { %>
-    <button class="register-btn disabled">Closed</button>
+    <button class="register-btn disabled">closed</button>
 <% } %>
 
 
                                 <!-- Attendance button -->
-<% if (eventStarted ) { %>
-    <% if (user.isAdmin) { %>
-        <!-- Admin will be redirected to scan QR codes for marking attendance -->
-        <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
-    <% } else { %>
-        <!-- Normal user will be able to view their QR code for the event -->
-        <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
-    <% } %>
-<% } else { %>
-    <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
-<% } %>
+                                <% const currentDate = new Date(); %>
+                                <% const eventDate = new Date(event.dateOfEvent); %>
+                                
+                                <!-- Check if today's date is the event date -->
+                                <% if (currentDate.toDateString() === eventDate.toDateString()) { %>
+                                
+                                    <% if (eventStarted) { %>
+                                        <!-- Check if the user is the event creator -->
+                                        <% if (event.creator.equals(user._id)) { %>
+                                            <!-- Admin (Event Creator) will be redirected to scan QR codes for marking attendance -->
+                                            <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
+                                        
+                                        <!-- Check if the user is a registered participant or volunteer -->
+                                        <% } else if (event.registeredUsers.includes(user._id) || event.registeredVolunteers.includes(user._id)) { %>
+                                            <!-- Normal user will be able to view their QR code for the event -->
+                                            <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
+                                        <% } else { %>
+                                            <!-- If the user is neither admin nor participant/volunteer, show nothing -->
+                                        <% } %>
+                                
+                                    <% } else { %>
+                                        <!-- Attendance is not available outside event time -->
+                                        <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
+                                    <% } %>
+                                
+                                <% } %>
+                                
 
 <!-- Feedback button -->
 <% if (feedbackAvailable) { %>

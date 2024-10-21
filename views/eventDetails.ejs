@@ -77,13 +77,33 @@
     <button class="register-btn disabled">Closed</button>
 <% } %>
 
-
-                            <!-- Attendance button -->
-                            <% if (eventStarted && !eventEnded) { %>
-                                <a href="/attendance/<%= event._id %>" class="attendance-btn">Mark Attendance</a>
-                            <% } else { %>
-                                <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
-                            <% } %>
+                                <!-- Attendance button -->
+                                <% const currentDate = new Date(); %>
+                                <% const eventDate = new Date(event.dateOfEvent); %>
+                                
+                                <!-- Check if today's date is the event date -->
+                                <% if (currentDate.toDateString() === eventDate.toDateString()) { %>
+                                
+                                    
+                                        <!-- Check if the user is the event creator -->
+                                        <% if (event.creator.equals(user._id)) { %>
+                                            <!-- Admin (Event Creator) will be redirected to scan QR codes for marking attendance -->
+                                            <a href="/admin/attendance/<%= event._id %>" class="attendance-btn">Scan QR Code</a>
+                                        
+                                        <!-- Check if the user is a registered participant or volunteer -->
+                                        <% } else if (event.registeredUsers.includes(user._id) || event.registeredVolunteers.includes(user._id)) { %>
+                                            <!-- Normal user will be able to view their QR code for the event -->
+                                            <a href="/attendance/<%= event._id %>" class="attendance-btn">Show QR Code</a>
+                                        <% } else { %>
+                                            <!-- If the user is neither admin nor participant/volunteer, show nothing -->
+                                        <% } %>
+                                
+                                    
+                                
+                                        <% } else { %>
+                                            <!-- Attendance is not available outside event time -->
+                                            <button class="attendance-btn disabled" style="font-size:14px;">attendance</button>
+                                        <% } %>
     
                             <!-- Feedback button -->
                             <% if (feedbackAvailable) { %>
@@ -158,6 +178,21 @@
 <% } else { %>
     <p   class="pcentered">No volunteers registered yet.</p>
 <% } %>
+
+<h2>Attendees</h2>
+<% if (event.attendees.length > 0) { %>
+    <div class="users-list">
+        <% event.attendees.forEach(user => { %>
+            <div class="user-item">
+                <img src="<%= user.profilePicture %>" alt="Profile Picture" class="other-profile-pic">
+                <p class="pcentered"><%= user.name %></p>
+            </div>
+        <% }) %>
+    </div>
+<% } else { %>
+    <p   class="pcentered">No attendees yet.</p>
+<% } %>
+
 
                 </div>
                 
