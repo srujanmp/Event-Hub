@@ -12,6 +12,12 @@ feedback and pritn attendnce
 and email announcements and chatbot
 browser notification one day before event if registered
 announcements subscribbe to club
+Leaderboard
+
+image storage- cloudinary
+
+Team
+New model with team lead
 
 # Hackloop 2024 project.
 hello
