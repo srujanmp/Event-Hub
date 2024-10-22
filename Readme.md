@@ -5,6 +5,13 @@ add .env file
 npm install
 npm start
 
+# To be added
+
+both server admin and club admin page
+feedback and pritn attendnce
+and email announcements and chatbot
+browser notification one day before event if registered
+announcements subscribbe to club
 
 # Hackloop 2024 project.
 hello
