@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/css/profile.css">
+      <link rel="stylesheet" href="/css/attendance.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/_default.css">
+</head>
+<body>
+  <%- include('_navbar') %>
+  <br><br>
+  <div class="profile-container">
+    <h1>Welcome, <%= user.name %>!</h1>
+    <div class="profile-details">
+      <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-picture">
+      <p><strong>Name:</strong> <%= user.name %></p>
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>College:</strong> <%= user.college %></p>
+      <% if (user.isAdmin) { %>
+        <p><strong>Role:</strong> Admin</p>
+      <% } else { %>
+        <p><strong>Role:</strong> User</p>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add or Delete Club Admins</title>
+  <link rel="stylesheet" href="/css/attendance.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/_default.css">
+  <style>
+body{
+    background-color: #f6b3ffcc;
+}
+
+/* Page Title */
+.page-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Form Styling */
+.admin-form {
+    background-color: #ffffffcc;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-label {
+  margin-bottom: 5px;
+}
+
+.form-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.submit-button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background-color: #ff00c3;
+  color: #fff;
+}
+
+/* Divider Styling */
+.divider {
+  width: 100%;
+
+  margin: 30px 0;
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Admin List */
+.admin-list {
+  list-style: none;
+  padding: 30px;
+  width: 100%;
+
+}
+
+.admin-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.admin-info {
+  font-weight: normal;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background-color: #dc3545;
+  color: #fff;
+}
+
+  </style>
+</head>
+<body>
+    <%- include('_navbar') %>
+
+  <h1 class="page-title">Manage Club Admins</h1>
+
+  <!-- Form to add new club admin -->
+  <form action="/auth/admin/create-club-admin" method="POST" class="admin-form">
+    <div class="form-group">
+      <label for="clubName" class="form-label">Club Name:</label>
+      <input type="text" id="clubName" name="clubName" class="form-input" required>
+    </div>
+    <div class="form-group">
+      <label for="adminEmail" class="form-label">Admin Email:</label>
+      <input type="email" id="adminEmail" name="email" class="form-input" required>
+    </div>
+    <div class="form-group">
+      <label for="adminName" class="form-label">Admin Name:</label>
+      <input type="text" id="adminName" name="adminName" class="form-input" required>
+    </div>
+    <button type="submit" class="submit-button">Add Club Admin</button>
+  </form>
+
+  <hr class="divider">
+
+  <!-- Display list of current club admins with delete button -->
+  <h2 class="section-title">Current Club Admins</h2>
+  <ul class="admin-list">
+    <% clubAdmins.forEach(admin => { %>
+      <li class="admin-item">
+        <span class="admin-info"><strong>Club:</strong> <%= admin.clubName %> | <strong>Admin:</strong> <%= admin.email %></span>
+        <button onclick="deleteClubAdmin('<%= admin._id %>')" class="delete-button">Delete</button>
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    function deleteClubAdmin(id) {
+      if (confirm('Are you sure you want to delete this admin?')) {
+        fetch(`/auth/club-admins/${id}`, {
+          method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    }
+  </script>
+</body>
+</html>

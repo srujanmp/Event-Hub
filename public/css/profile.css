@@ -1,0 +1,36 @@
+body{
+    background-color: #f6b3ffcc;
+}
+  
+  .profile-container {
+    background-color: #ffffffcc;
+    width: 100%;
+    max-width: 520px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin:auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .profile-details {
+    margin-top: 15px;
+  }
+  
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .profile-details p {
+    margin: 8px 0;
+  }
+  
+  .profile-details strong {
+    font-weight: bold;
+  }
+  

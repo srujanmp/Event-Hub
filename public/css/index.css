@@ -95,32 +95,37 @@ body {
 }
 
 .info:hover {
-    transform: scale(1.05); /* Slightly increase the size on hover */
+    transform: scale(1.01); /* Slightly increase the size on hover */
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Add more depth on hover */
 }
 
 /* Image container */
 .pic {
     flex: 1; /* Allow the image container to resize */
-    min-width: 250px; /* Set a minimum width for the image container */
-    max-width: 600px; /* Optional: Set a maximum width for larger screens */
+    /* min-width: 250px; /* Set a minimum width for the image container */
+    /* max-width: 600px; Optional: Set a maximum width for larger screens */ */
+    
     background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent background for the image */
     border-radius: 10px;
     overflow: hidden; /* Ensure the image stays within the rounded corners */
     display: flex;
-    justify-content: center; /* Center the image */
+    justify-content:space-evenly; /* Center the image */
+    justify-content: space-between;
     align-items: center;
 }
 
 /* Image styling */
 .event_img {
     width: 100%; /* Make the image responsive to its container */
+    width:300px;
+    margin:auto;
     height: auto;
     border-radius: 10px;
 }
 
 /* Content div */
 .content {
+    width:100%;
     flex: 2; /* Allow the content to take more space compared to the image */
     min-width: 300px; /* Set a minimum width for the content */
 

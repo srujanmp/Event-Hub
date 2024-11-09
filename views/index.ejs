@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>homepage</title>
+    <title>Homepage</title>
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="/css/_default.css">
-
 </head>
 <body>
     <div class="main">
@@ -17,40 +16,33 @@
                     <h2>EVENT_HUB</h2>
                 </div>
                 <div class="nav-buttons">
-                    <div class="nav-buttons">
-                        <a href="/auth/login" class="btn login-button">Login / Signup <img src="images/google.png" class="google-image" alt="" srcset=""></a>
-                    </div>
+                    <a href="/auth/login" class="btn login-button">Login / Signup <img src="images/google.png" class="google-image" alt=""></a>
                 </div>
             </nav>
         </div>
+
         <div class="main_info">
-            <div class="info">
-                <div class="pic">
-                    <img src="/images/img1.jpg" alt="event image" class="event_img">
+            <% events.forEach((event, index) => { %>
+                <div class="info">
+                    <% if (index % 2 === 0) { %> <!-- Alternating layout based on index -->
+                        <div class="pic">
+                            <img src="<%= event.eventPoster %>" alt="<%= event.eventName %>" class="event_img">
+                        </div>
+                        <div class="content">
+                            <h1 class="head_name"><%= event.eventName %></h1>
+                            <p><%= event.description %></p>
+                        </div>
+                    <% } else { %>
+                        <div class="content">
+                            <h1 class="head_name"><%= event.eventName %></h1>
+                            <p><%= event.description %></p>
+                        </div>
+                        <div class="pic">
+                            <img src="<%= event.eventPoster %>" alt="<%= event.eventName %>" class="event_img">
+                        </div>
+                    <% } %>
                 </div>
-                <div class="content">
-                    <h1 class="head_name"> THE FIRST EVENT </h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est praesentium vero sequi adipisci eaque facilis asperiores maiores incidunt laborum voluptas, quaerat omnis distinctio impedit modi repellendus odit qui quam laudantium.</p>
-                </div>
-            </div>
-            <div class="info">
-                <div class="content">
-                    <h1 class="head_name"> THE Second EVENT </h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est praesentium vero sequi adipisci eaque facilis asperiores maiores incidunt laborum voluptas, quaerat omnis distinctio impedit modi repellendus odit qui quam laudantium.</p>
-                </div>
-                <div class="pic">
-                    <img src="/images/img2.jpeg" alt="event image" class="event_img">
-                </div>
-            </div>
-            <div class="info">
-                <div class="pic">
-                    <img src="/images/img3.jpg" alt="event image" class="event_img">
-                </div>
-                <div class="content">
-                    <h1 class="head_name"> THE THIRD EVENT </h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est praesentium vero sequi adipisci eaque facilis asperiores maiores incidunt laborum voluptas, quaerat omnis distinctio impedit modi repellendus odit qui quam laudantium.</p>
-                </div>
-            </div>
+            <% }) %>
         </div>
     </div>
 </body>

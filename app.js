@@ -11,7 +11,8 @@ const eventReq = require('./routes/eventReq');
 const userOperations=require('./routes/userOp');
 const eventRoutes=require('./routes/event');
 const attendanceRoutes=require('./routes/attendance');
-
+const userRoutes = require('./routes/user');
+const Event = require('./models/Event');
 require('dotenv').config();
 
 const app = express();
@@ -59,13 +60,22 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  try {
+    const events = await Event.find().sort({ createdAt: -1 }).limit(3); // Sort by newest and limit to 3 events
+    res.render('index', { events });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.render('index', { events: [] }); // Render with empty events if there's an error
+  }
 });
 
 
 
 // Auth routes
+
+app.use('/user', userRoutes);
+
 app.use('/auth', authRoutes);
 app.use('/', dashboardRoutes);
 app.use('/admin', adminRoutes); 

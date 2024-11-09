@@ -15,9 +15,9 @@
 }
 
 body {
-
-        background: linear-gradient(135deg, rgb(255, 255, 255), rgba(151, 151, 151, 0.9));
-        animation: gradientFlow 5s ease infinite;
+    background-color: #f6b3ffcc;
+        /* background: linear-gradient(135deg, rgb(255, 255, 255), rgba(151, 151, 151, 0.9)); */
+        /* animation: gradientFlow 5s ease infinite; */
         background-size: 200% 200%;
         color: white;
 
@@ -150,7 +150,7 @@ body {
         display: flex;
         gap: 20px;
         padding: 15px 20px;
-        background-color: #f8f9fa;
+        background-color: #fce4ff;
         border-top: 1px solid #e0e0e0;
     }
     
@@ -189,7 +189,7 @@ body {
         min-width: 100px;
         max-width: 150px;
         padding: 0 15px;
-        background-color: #3498db;
+        background-color: #ff00c3           ;
         color: #fff;
         border: none;
         border-radius: 6px;
@@ -206,7 +206,7 @@ body {
     .attendance-btn:hover,
     .feedback-btn:hover,
     .register-btn:hover {
-        background-color: #2980b9;
+        background-color: #cf48b0;
         transform: translateY(-1px);
     }
     
