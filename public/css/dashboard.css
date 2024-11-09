@@ -15,10 +15,11 @@
 }
 
 body {
-    background-color: #f6b3ffcc;
+    /* background-color: #f6b3ffcc; */
+    background: radial-gradient(circle at center, #ed3cbe, #000000 130%, #000000 100%);
         /* background: linear-gradient(135deg, rgb(255, 255, 255), rgba(151, 151, 151, 0.9)); */
         /* animation: gradientFlow 5s ease infinite; */
-        background-size: 200% 200%;
+        /* background-size: 200% 200%; */
         color: white;
 
 }
@@ -45,7 +46,7 @@ body {
     }
     
     .dashboard-content h1 {
-        color: #2c3e50;
+        color: #ffffff;
         margin-bottom: 30px;
         font-size: 2.5rem;
     }
@@ -67,12 +68,25 @@ body {
     
     .events-list {
         display: flex;
+    align-items: flex-start; /* Aligns items at the top */
+    gap: 20px; /* Space between the image and content */
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent white background for glass effect */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    backdrop-filter: blur(10px); /* Frosted glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    margin-bottom: 20px;
+        display: flex;
         flex-direction: column;
         gap: 20px;
         padding: 10px;
     }
     
     .event-item {
+        
         background-color: #fff;
         overflow: hidden;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
@@ -120,7 +134,7 @@ body {
     }
     
     .event-item h3 {
-        color: #2c3e50;
+        color: #340131;
         font-size: 1.8rem;
         margin-bottom: 20px;
     }
@@ -168,7 +182,7 @@ body {
     .stat-value {
         font-size: 1.1rem;
         font-weight: 600;
-        color: #2c3e50;
+        color: #340131;
     }
     
     .event-buttons {
