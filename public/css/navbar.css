@@ -43,3 +43,10 @@
     margin-right: 8px; /* Space between the image and the link */
     object-fit: cover; /* Ensure the image covers the box */
 }
+
+
+/* Logout icon positioned absolutely to the rightmost part of the navbar */
+.nav-links li.logout {
+    position: absolute;
+    right: 20px; /* Position it 20px from the right edge of the navbar */
+  }
