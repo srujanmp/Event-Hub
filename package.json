@@ -22,6 +22,7 @@
     "node": "file:",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "pdfkit": "^0.15.1",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {

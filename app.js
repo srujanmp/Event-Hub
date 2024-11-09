@@ -14,6 +14,7 @@ const attendanceRoutes=require('./routes/attendance');
 const userRoutes = require('./routes/user');
 const Event = require('./models/Event');
 const chatbotRoute = require("./routes/chatbot");
+const pdfPrintRoute = require("./routes/pdfPrint");
 require('dotenv').config();
 
 const app = express();
@@ -84,6 +85,7 @@ app.use(eventReq);
 app.use(userOperations);
 app.use(eventRoutes);
 app.use(attendanceRoutes);
+app.use(pdfPrintRoute);
 
 
 

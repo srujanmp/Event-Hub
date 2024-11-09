@@ -10,6 +10,19 @@
   <link rel="stylesheet" href="/css/navbar.css"> <!-- Link to your CSS file -->
   <link rel="stylesheet" href="/css/_default.css">
   <style>
+#download-pdf-btn {
+  width:70px;
+  position: absolute;
+  bottom: 20px; /* Distance from the bottom of the page */
+  right: 20px;  /* Distance from the right edge of the page */
+
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000; /* Ensure it's on top of other content */
+}
 
   </style>
 </head>
@@ -169,6 +182,19 @@
         <% } %>
 
 
+<br>
+        <button id="download-pdf-btn"   onclick="downloadPDF()" style="font-size:40px;border:0" width="100"><img style="width:70px; border:0" src="/images/download.png" alt="" srcset=""></button>
+
+<script>
+  function downloadPDF() {
+    // Get the event ID dynamically (assuming the event ID is available in your template as 'event._id')
+    const eventId = '<%= event._id %>';
+    
+    // Trigger the download by navigating to the /generate-pdf route
+    window.location.href = `/generate-pdf/${eventId}`;
+  }
+</script>
+
       </div>
 
 
@@ -176,6 +202,7 @@
 
 
   </div>
+
   <script>
     // Confirmation for registration
     document.querySelectorAll('.agree').forEach(button => {
