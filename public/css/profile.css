@@ -1,5 +1,6 @@
 body{
-    background-color: #f6b3ffcc;
+  background: radial-gradient(circle at center, #ed3cbe, #000000 130%, #000000 100%);
+  color: #340131;
 }
   
   .profile-container {
