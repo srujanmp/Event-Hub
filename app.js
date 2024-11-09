@@ -13,6 +13,7 @@ const eventRoutes=require('./routes/event');
 const attendanceRoutes=require('./routes/attendance');
 const userRoutes = require('./routes/user');
 const Event = require('./models/Event');
+const chatbotRoute = require("./routes/chatbot");
 require('dotenv').config();
 
 const app = express();
@@ -75,7 +76,7 @@ app.get('/', async (req, res) => {
 // Auth routes
 
 app.use('/user', userRoutes);
-
+app.use("/api/chatbot", chatbotRoute);
 app.use('/auth', authRoutes);
 app.use('/', dashboardRoutes);
 app.use('/admin', adminRoutes); 

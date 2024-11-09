@@ -11,6 +11,126 @@
   <link rel="stylesheet" href="css/navbar.css"> <!-- Link to your CSS file -->
   <link rel="stylesheet" href="/css/_default.css">
   <style>
+   
+.chatbot-btn {
+  position: fixed;
+  bottom: 20px;  /* Distance from the bottom of the screen */
+  right: 20px;   /* Distance from the right of the screen */
+  background-color: #ff00c3;  /* Button color */
+  color: white;  /* Text color */
+  border: none;  /* Remove border */
+  border-radius: 50px;  /* Rounded corners */
+  padding: 15px 20px;  /* Button padding */
+  font-size: 16px;  /* Font size */
+  cursor: pointer;  /* Cursor changes to pointer */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Light shadow */
+  transition: background-color 0.3s ease, transform 0.3s ease;  /* Smooth transition */
+}
+
+.chatbot-btn:hover {
+  background-color: #fe64da;  /* Darker shade on hover */
+  transform: scale(1.1);  /* Slightly increase button size on hover */
+}
+
+.chatbot-btn:active {
+  transform: scale(0.98);  /* Slight shrink on click */
+}
+/* Chatbot Popup Styling */
+#chatbot-popup {
+  position: fixed;
+  bottom: 20px; /* Space from the bottom of the screen */
+  right: 20px; /* Space from the right side of the screen */
+  width: 300px; /* Adjust width as needed */
+  max-height: 500px; /* Maximum height of the popup */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  display: none;
+  z-index: 1000;
+  overflow: auto;
+}
+
+/* Container Styling */
+.chatbot-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Close Button */
+#close-chatbot {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  text-align: right;
+  padding: 0;
+  margin: -10px -10px 10px 0;
+}
+
+/* Close button hover effect */
+#close-chatbot:hover {
+  color: red;
+}
+
+/* Textarea Styling */
+#user-prompt {
+  resize: none;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+#user-prompt:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Send Button */
+#send-prompt {
+  padding: 10px;
+  background-color: #ff00c3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+/* Send button hover effect */
+#send-prompt:hover {
+  background-color: #ff51d6;
+}
+
+/* Send button active effect */
+#send-prompt:active {
+  background-color: #003c7b;
+}
+
+/* Chatbot Response Area */
+#chatbot-response {
+  font-size: 14px;
+  color: #333;
+  padding-top: 10px;
+  white-space: pre-wrap;
+}
+
+/* Add some styling to the chatbot response area (to display the result better) */
+#chatbot-response p {
+  margin: 5px 0;
+  padding: 5px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
 
   </style>
 </head>
@@ -139,6 +259,78 @@
       <% }) %>
     </div>
   </div>
+
+  <!-- Add a Chatbot button -->
+<button id="chatbot-btn" class="chatbot-btn"> 💬</button>
+
+<!-- Chatbot popup/modal -->
+<div id="chatbot-popup" style="display: none;">
+  <div class="chatbot-container">
+    <button id="close-chatbot">❌</button>
+
+    <textarea id="user-prompt" placeholder="Ask something..." style="width:100%"></textarea>
+    <button id="send-prompt">Send</button>
+    <div id="chatbot-response"></div>
+  </div>
+</div>
+
+
+<script>
+ const sendPromptButton = document.getElementById("send-prompt");
+const userPromptInput = document.getElementById("user-prompt");
+const chatbotResponseDiv = document.getElementById("chatbot-response");
+const closeChatbot = document.getElementById("close-chatbot");
+const chatbotPopup = document.getElementById("chatbot-popup");
+
+// Open the chatbot popup when the chatbot button is clicked
+document.getElementById("chatbot-btn").addEventListener("click", () => {
+  chatbotPopup.style.display = "block";
+});
+
+// Close the chatbot popup when the close button is clicked
+closeChatbot.addEventListener("click", () => {
+  chatbotPopup.style.display = "none";
+});
+
+// Trigger the send button click on Enter key press
+userPromptInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();  // Prevents adding a new line to the textarea
+    sendPromptButton.click();  // Simulate click on the send button
+  }
+});
+
+// Handle send button click
+sendPromptButton.addEventListener("click", async () => {
+  const prompt = userPromptInput.value;
+  if (prompt.trim() === "") return;
+
+  try {
+    const response = await fetch("/api/chatbot/generate-response", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      chatbotResponseDiv.innerHTML = "<strong>Response:</strong><p style=\"color:black;font-size:12px;\">" + data.response + "</p>";
+    } else {
+      chatbotResponseDiv.innerHTML = "<strong>Error:</strong><p>" + data.error + "</p>";
+    }
+  } catch (error) {
+    chatbotResponseDiv.innerHTML = "<strong>Error:</strong><p>There was an error connecting to the server.</p>";
+  }
+});
+
+</script>
+
+
+
+
+
   <script>
     // Confirmation for registration
     document.querySelectorAll('.agree').forEach(button => {
