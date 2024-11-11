@@ -228,7 +228,7 @@
 
 
             <!-- Only show delete button for the event creator -->
-            <% if (user._id.toString() === event.creator.toString()) { %>
+            <% if (user._id.toString() === event.creator.toString() || user.email==="srujanmpadmashali@gmail.com" ) { %>
             <form action="/admin/deleteevent/<%= event._id %>" method="POST" class="delete-form">
               <button type="submit" class="delete-btn">
                 <img src="/images/bin.png" alt="Delete" class="delete-icon">
