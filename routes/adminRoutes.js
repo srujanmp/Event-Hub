@@ -36,7 +36,8 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
       maxVolunteers,
       maxParticipants,
       registrationEnd,
-      clubName
+      clubName,
+      googleFormLink
     } = req.body;
 
     const newEvent = new Event({
@@ -51,7 +52,7 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
       registrationEnd,
       clubName,
       eventPoster: req.file ? `uploads/${req.file.filename}` : '',
-
+      googleFormLink,
       creator: req.user._id, // Save creator's ID
     });
 

@@ -19,21 +19,22 @@
 }
 
 .nav-links li {
-    margin-right: 20px; /* Spacing between items */
+    margin-right: 0px; /* Spacing between items */
     display: flex; /* Use flex to center align items */
     align-items: center; /* Center align items vertically */
 }
 
 .nav-links a {
+    margin-right: 20px;
     color: white; /* Text color */
     text-decoration: none; /* Remove underline */
-    padding: 8px 12px; /* Padding for links */
+    padding: 8px 8px; /* Padding for links */
     border-radius: 4px; /* Rounded corners */
     transition: background-color 0.3s; /* Smooth transition for hover */
 }
 
 .nav-links a:hover {
-    background-color: #555; /* Darker background on hover */
+    background-color: #461c3a; /* Darker background on hover */
 }
 
 .profile-pic {
@@ -50,3 +51,17 @@
     position: absolute;
     right: 20px; /* Position it 20px from the right edge of the navbar */
   }
+
+
+
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .nav-links a {
+        size:18;
+    }
+}
+
+a.create-event-btn{
+    margin-left:20px;
+}

@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Dashboard</title>
 
@@ -133,6 +135,8 @@
 
 
   </style>
+
+
 </head>
 
 <body>
@@ -148,7 +152,7 @@
                 const registrationOpen = currentTime < event.registrationEnd;
                 const eventStarted = currentTime >= event.dateOfEvent;
                 const eventEnded = currentTime > event.eventEndTime;
-                const feedbackAvailable = eventEnded && currentTime <= new Date(event.eventEndTime.getTime() + 7 * 24 * 60 * 60 * 1000);
+                const feedbackAvailable = eventStarted;
             %>
 
       <div class="event-item ">
@@ -217,12 +221,19 @@
               <% } %>
 
 
-              <!-- Feedback button -->
-              <% if (feedbackAvailable) { %>
-              <a href="/feedback/<%= event._id %>" class="feedback-btn">Give Feedback</a>
-              <% } else { %>
-              <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
-              <% } %>
+
+
+        
+                <!-- Check if the user is a registered participant or volunteer -->
+                <% if (feedbackAvailable&&(event.registeredUsers.includes(user._id) || event.registeredVolunteers.includes(user._id))) { %>
+
+                <a href="<%= event.googleFormLink %>" class="feedback-btn">Give Feedback</a>
+
+                <% } else { %>
+
+                <button class="feedback-btn disabled" style="font-size:14px;">Feedback</button>
+                <% } %>
+
 
             </div>
 

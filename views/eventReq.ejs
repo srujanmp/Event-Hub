@@ -24,7 +24,7 @@
                         <p><strong>Expectations:</strong> <%= event.eventExpectation %></p>
                         <p><strong>Interested:</strong> <span id="interested-count-<%= event._id %>"><%= event.usersInterested.length %></span> people</p>
                         <button type="button" onclick="toggleInterest('<%= event._id %>')">
-                            Interested in this event
+                            <img src="/images/upvote.webp"  style="vertical-align:middle;width:25px;display:inline;-webkit-filter: invert(100%); /* Safari/Chrome */filter: invert(100%);"alt="" srcset="">  Interested in this event
                         </button>
                     </div>
                 <% }) %>

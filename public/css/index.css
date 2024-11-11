@@ -161,6 +161,10 @@ p {
         flex: none; /* Remove flex-grow for better stacking on smaller screens */
         width: 100%; /* Full width on mobile */
     }
+    .contentLOGO h2 {
+        color: #fff;
+        font-size: 1em;
+    }
 }
 
 
@@ -168,7 +172,7 @@ p {
 
 .contentLOGO h2 {
 	color: #fff;
-	font-size: 3em;
+	font-size: 2em;
     margin-left: 150px;
 	position: absolute;
     font-family:Arial, Helvetica, sans-serif;

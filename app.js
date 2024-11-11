@@ -4,6 +4,8 @@ const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
+const favicon = require('serve-favicon');
+
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard'); 
 const adminRoutes = require('./routes/adminRoutes'); 
@@ -30,7 +32,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/your_db_n
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
 
+
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 
 // Body parser middleware
 // app.use(express.urlencoded({ extended: false }));

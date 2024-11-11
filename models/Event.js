@@ -17,7 +17,8 @@ const eventSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: 'User', default: 0 }],
   registeredVolunteers: [{ type: Schema.Types.ObjectId, ref: 'User', default: 0 }],
-  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }]  // New field for attendance
+  attendees: [{ type: Schema.Types.ObjectId, ref: 'User' }], // Field for attendance
+  googleFormLink: { type: String, default: 'https://forms.gle/CdFuxvgp4uyhmKNH7' } 
 });
 
 const Event = mongoose.model('Event', eventSchema);
