@@ -15,7 +15,7 @@ const allowedDomains = ['nmamit.in'];
 
 
 const isServerAdmin = (req, res, next) => {
-  if (req.user && req.user.email === 'srujanmpadmashali@gmail.com') {
+  if (req.user && req.user.email === 'sumukharaoh05@gmail.com') {
     return next();
   }
   return res.redirect('/');
@@ -41,7 +41,7 @@ passport.use(new GoogleStrategy({
     const college = emailDomain === 'nmamit.in' ? 'NMAMIT' : 'Other';
 
     // Check if user is server admin or club admin
-    const isServerAdmin = email === 'srujanmpadmashali@gmail.com';
+    const isServerAdmin = email === 'sumukharaoh05@gmail.com';
     const isClubAdmin = await ClubAdmin.exists({ email }).then(result => !!result);
 
     // Unauthorized if not a server admin, club admin, or from allowed domain

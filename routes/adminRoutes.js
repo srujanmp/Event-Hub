@@ -122,7 +122,7 @@ router.post('/deleteevent/:id', async (req, res) => {
       return res.redirect('/dashboard');
     }
 
-    if (req.user._id.toString() === event.creator.toString()||req.user.email==="srujanmpadmashali@gmail.com") {
+    if (req.user._id.toString() === event.creator.toString()||req.user.email==="sumukharaoh05@gmail.com") {
       await Event.findByIdAndDelete(eventId);
       req.flash('success_msg', 'Event deleted successfully.');
     } else {
