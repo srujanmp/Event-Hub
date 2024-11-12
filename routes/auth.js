@@ -15,7 +15,7 @@ const allowedDomains = ['nmamit.in'];
 
 
 const isServerAdmin = (req, res, next) => {
-  if (req.user && req.user.email === 'srujanmpadmashali@gmail.com') {
+  if (req.user && (req.user.email === 'srujanmpadmashali@gmail.com' || req.user.email === 'sumukharaoh-5@gmail.com')) {
     return next();
   }
   return res.redirect('/');
