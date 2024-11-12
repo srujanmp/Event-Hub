@@ -1,18 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/Event'); // Import Event model
-const multer = require('multer');
+const multer = require('multer'); // (no longer needed)
+const cloudinary = require('cloudinary').v2; // Import Cloudinary v2
+
+
+
+
 
 // Set up storage and file upload handling
+
 const storage = multer.diskStorage({
+
   destination: function (req, file, cb) {
+
     cb(null, 'public/uploads/'); // Folder where event images will be stored
+
   },
+
   filename: function (req, file, cb) {
+
     cb(null, Date.now() + '-' + file.originalname); // Unique name for the uploaded file
+
   }
+
 });
+
 const upload = multer({ storage });
+
+
+// Configure Cloudinary with your credentials (replace placeholders)
+cloudinary.config({
+  cloud_name: 'dgw9n3zt9',
+  api_key: '279138198381885',
+  api_secret: 'bwUDkG2zgQGBGP2_C9r7_NhthIU'
+});
 
 // Route to display event creation form
 router.get('/create-event', (req, res) => {
@@ -20,10 +42,9 @@ router.get('/create-event', (req, res) => {
     req.flash('error_msg', 'Unauthorized access.');
     return res.redirect('/auth/login');
   }
-  res.render('createEvent', {user:req.user}); // Render the form
+  res.render('createEvent', { user: req.user }); // Render the form
 });
 
-// Route to handle event creation form submission
 router.post('/createevent', upload.single('eventImage'), async (req, res) => {
   try {
     const {
@@ -40,6 +61,27 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
       googleFormLink
     } = req.body;
 
+    let eventPosterUrl = '';
+
+    // Upload image to Cloudinary with transformations
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          transformation: {
+            width: 500, // Resize to 500px width
+            quality: 100, // Compress to 35% quality
+            fetch_format: 'auto' // Automatically select optimal format
+          }
+        });
+        eventPosterUrl = result.secure_url; // Store the Cloudinary URL
+        console.log(eventPosterUrl);
+      } catch (error) {
+        console.error('Error uploading image to Cloudinary:', error);
+        req.flash('error_msg', 'Error uploading event image.');
+        return res.redirect('/admin/create-event');
+      }
+    }
+
     const newEvent = new Event({
       eventName,
       description,
@@ -51,7 +93,7 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
       maxParticipants,
       registrationEnd,
       clubName,
-      eventPoster: req.file ? `uploads/${req.file.filename}` : '',
+      eventPoster: eventPosterUrl, // Store the Cloudinary URL or an empty string
       googleFormLink,
       creator: req.user._id, // Save creator's ID
     });
@@ -65,7 +107,6 @@ router.post('/createevent', upload.single('eventImage'), async (req, res) => {
     res.redirect('/admin/create-event');
   }
 });
-
 
 
 

@@ -158,13 +158,13 @@
       <div class="event-item ">
         <div class="event-main-content">
           <div class="event-image">
-            <img src="/<%= event.eventPoster %>" alt="Event Poster">
+            <img src="<%= event.eventPoster %>" alt="Event Poster">
           </div>
           <div class="event-details" >
             <h3><%= event.eventName %></h3>
             <p><%= event.description %></p>
             <p><strong>Venue:</strong> <%= event.venue %></p>
-            <p><strong>Date:</strong> <%= event.dateOfEvent.toLocaleDateString() %></p>
+            <p><strong>Date:</strong> <%= event.dateOfEvent%></p>
             <p><strong>Time:</strong> <%= event.eventStartTime %> - <%= event.eventEndTime %></p>
 
             <!-- Button container to hold buttons side by side -->
