@@ -25,6 +25,8 @@ Leaderboard
 image storage- cloudinary
 Team
 New model with team lead
+<br>
+And also paperless jury(judging)-got feedback from Satwik.
 
 # Hackloop 2024 project.
 hello
