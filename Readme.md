@@ -1,4 +1,9 @@
 # Event-Hub
+https://github.com/user-attachments/assets/7f485c41-30de-4955-a0e6-21ccc3eae3b4
+
+
+
+
 
 start mongodb server
 add .env file
@@ -9,7 +14,7 @@ npm start
 
 both server admin and club admin page
 
-https://github.com/user-attachments/assets/7f485c41-30de-4955-a0e6-21ccc3eae3b4
+
 
 
 feedback and pritn attendnce
