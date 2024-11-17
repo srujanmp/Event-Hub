@@ -1,9 +1,8 @@
 # Event-Hub
-[nmamitevents.](https://nmamitevents.onrender.com/)
+[nmamitevents.onrender.com](https://nmamitevents.onrender.com/)
 
-#Video
 
-https://github.com/user-attachments/assets/7f485c41-30de-4955-a0e6-21ccc3eae3b4
+https://github.com/user-attachments/assets/b0096695-1ec8-4b21-bbba-6e4d91e72eca
 
 
 start mongodb server
